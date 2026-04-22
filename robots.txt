@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zuuz.ai/sitemap.xml
+
+Disallow: /admin
+Disallow: /api/
+Disallow: /debug/
+Disallow: /platform-overview$
+Disallow: /platform-overview-v2$

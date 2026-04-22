@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>ZUUZ Platform Overview v2</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://zuuz.ai/">
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZUUZ Platform Overview v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --e:#0018FF;--sky:#A3F3FF;--blk:#000;--wht:#fff;
+  --ink:#080810;--panel:#0D0D18;--bdr:#1A1A2E;--muted:#555570;--soft:#888899;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--ink);color:var(--wht);overflow-x:hidden}
+.display{font-weight:900;letter-spacing:-.04em;line-height:1.0;font-style:italic}
+.semi{font-weight:800;letter-spacing:-.03em;line-height:1.05}
+a{text-decoration:none;cursor:pointer;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.section{padding:96px 0}
+.grid-bg{background-image:linear-gradient(var(--bdr) 1px,transparent 1px),linear-gradient(90deg,var(--bdr) 1px,transparent 1px);background-size:56px 56px}
+
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.2)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(0,24,255,0)}50%{box-shadow:0 0 32px 8px rgba(0,24,255,.3)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+.fade-in{animation:fadeUp .5s ease both}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
+nav.scrolled{background:rgba(8,8,16,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{font-size:13px;font-weight:500;color:var(--soft);padding:8px 15px;border-radius:4px;cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:4px;position:relative}
+.nav-link:hover,.nav-link.lit{color:var(--wht)}
+.nav-item:hover .dropdown{display:block}
+.dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:var(--panel);border:1px solid var(--bdr);border-radius:10px;padding:8px;min-width:210px;box-shadow:0 24px 48px rgba(0,0,0,.55)}
+.dropdown a{display:block;padding:9px 14px;border-radius:6px;font-size:13px;font-weight:500;transition:background .15s}
+.dropdown a:hover{background:rgba(255,255,255,.06)}
+.dropdown a.curr{color:var(--sky)}
+.btn-nav{display:inline-flex;align-items:center;gap:7px;background:var(--e);color:var(--wht);border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 20px;border-radius:6px}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--e);color:var(--wht);border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:13px 26px;border-radius:6px;transition:all .2s}
+.btn-p:hover{filter:brightness(1.14);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,24,255,.4)}
+.btn-g{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--wht);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;padding:13px 22px;border-radius:6px;border:1px solid var(--bdr);transition:all .2s}
+.btn-g:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.25)}
+
+/* SUB-NAV */
+.sub-nav{background:var(--panel);border-bottom:1px solid var(--bdr);padding:0 48px;display:flex;gap:0;position:sticky;top:68px;z-index:90;overflow-x:auto}
+.sub-nav a{display:block;padding:14px 18px;font-size:12px;font-weight:600;color:var(--soft);border-bottom:2px solid transparent;transition:all .2s;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.sub-nav a:hover{color:var(--wht)}
+.sub-nav a.active{color:var(--wht);border-bottom-color:var(--e)}
+
+/* KICKER */
+.kicker{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);margin-bottom:14px}
+.kicker.blue{color:var(--e)}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:20px}
+.breadcrumb a:hover{color:var(--wht)}
+
+/* ── HERO ── */
+.hero{position:relative;padding:148px 0 80px;overflow:hidden}
+.hero-glow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(0,24,255,.2) 0%,transparent 65%);top:-200px;right:-200px;pointer-events:none}
+
+/* ── PLATFORM MAP (connected system) ── */
+.pmap{display:grid;grid-template-columns:1fr 120px 1fr;gap:0;align-items:center}
+.pmap-col{display:flex;flex-direction:column;gap:6px}
+.pmap-chip{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;font-size:12px;font-weight:600;color:var(--soft);text-align:center;transition:all .2s}
+.pmap-chip:hover{color:var(--wht);border-color:rgba(255,255,255,.2)}
+.pmap-center{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.pmap-core{background:var(--e);border-radius:12px;padding:18px 14px;text-align:center;animation:glow 3s ease-in-out infinite;cursor:default}
+.pmap-core-label{font-size:11px;font-weight:900;color:var(--wht);letter-spacing:.08em}
+.pmap-core-sub{font-size:9px;font-weight:400;color:rgba(255,255,255,.7);margin-top:3px}
+.pmap-line{width:1px;flex:1;background:linear-gradient(to bottom,transparent,var(--e),transparent);min-height:20px}
+.pmap-arrow{font-size:14px;color:var(--e);font-weight:700}
+
+/* ── HOW IT WORKS (redesigned) ── */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.step{background:var(--panel);border:1px solid var(--bdr);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;transition:border-color .2s}
+.step:hover{border-color:rgba(0,24,255,.4)}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--e);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.step:hover::before{transform:scaleX(1)}
+.step-num{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--muted);margin-bottom:16px}
+.step-icon{font-size:28px;margin-bottom:14px;display:block}
+.step-title{font-size:16px;font-weight:800;color:var(--wht);margin-bottom:8px;letter-spacing:-.02em}
+.step-line{font-size:13px;font-weight:500;color:var(--soft);line-height:1.5}
+.step-proof{margin-top:14px;font-size:11px;font-weight:700;color:var(--sky);display:flex;align-items:center;gap:5px}
+
+/* ── CAPABILITY SECTION ── */
+.cap-tabs{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:4px}
+.cap-tab{padding:10px 18px;font-size:12px;font-weight:700;color:var(--soft);cursor:pointer;border-radius:8px;border:1px solid var(--bdr);background:var(--panel);transition:all .2s;letter-spacing:.02em}
+.cap-tab:hover{color:var(--wht);border-color:rgba(255,255,255,.2)}
+.cap-tab.active{color:var(--wht);border-color:var(--e);background:rgba(0,24,255,.12)}
+.cap-body-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4px;min-height:400px}
+.cap-left{background:var(--panel);border:1px solid var(--bdr);border-radius:14px;padding:36px}
+.cap-right{background:var(--ink);border:1px solid var(--bdr);border-radius:14px;padding:28px;display:flex;flex-direction:column}
+.cap-tagline{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-bottom:14px}
+.cap-title{font-size:30px;font-weight:900;color:var(--wht);margin-bottom:14px;letter-spacing:-.03em}
+.cap-one-liner{font-size:16px;font-weight:600;color:var(--wht);line-height:1.55;margin-bottom:20px;padding:16px 18px;background:rgba(0,24,255,.1);border-left:3px solid var(--e);border-radius:6px}
+.cap-proof{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.cap-proof-item{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:500;color:var(--soft);line-height:1.4}
+.cap-proof-item b{color:var(--wht);font-weight:700}
+.cap-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--e);margin-top:auto}
+.cap-ui-label{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+
+/* UI MOCKUPS inside cap-right */
+.mock-window{background:var(--panel);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;flex:1}
+.mock-chrome{background:rgba(255,255,255,.03);border-bottom:1px solid var(--bdr);padding:10px 14px;display:flex;align-items:center;gap:6px}
+.mock-dot{width:8px;height:8px;border-radius:50%}
+.mock-body{padding:16px}
+.mock-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;margin-bottom:3px;font-size:11px}
+.mock-row.alt{background:rgba(255,255,255,.025)}
+.mock-label{font-weight:500;color:var(--soft)}
+.mock-val{font-weight:700;color:var(--wht);display:flex;align-items:center;gap:6px}
+.mock-status{width:5px;height:5px;border-radius:50%}
+.mock-verdict{background:rgba(0,24,255,.15);border:1px solid var(--e);border-radius:6px;padding:8px 12px;font-size:12px;font-weight:700;color:var(--sky);text-align:center;margin-bottom:10px}
+.mock-tag{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:600;color:var(--soft);margin-bottom:4px}
+.mock-agent-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;margin-bottom:3px;background:rgba(0,24,255,.06);border:1px solid rgba(0,24,255,.15)}
+.mock-agent-name{font-size:12px;font-weight:600;color:var(--wht)}
+.mock-agent-save{margin-left:auto;font-size:11px;font-weight:700;color:var(--sky)}
+.mock-search-bar{background:rgba(255,255,255,.05);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--soft);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.mock-cursor{display:inline-block;width:1px;height:12px;background:var(--e);animation:blink 1s infinite;vertical-align:middle;margin-left:2px}
+.mock-result{background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:6px;padding:10px 12px;margin-bottom:4px}
+.mock-result-title{font-size:12px;font-weight:600;color:var(--wht);margin-bottom:2px}
+.mock-result-src{font-size:10px;font-weight:500;color:var(--muted)}
+.mock-workflow-step{background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;margin-bottom:4px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:var(--soft)}
+.mock-workflow-step.done{border-color:rgba(0,200,100,.3);color:var(--wht)}
+.mock-workflow-step.active{border-color:var(--e);color:var(--sky);background:rgba(0,24,255,.08)}
+.mock-incident{padding:10px 12px;border-radius:8px;border:1px solid;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
+.inc-sev-crit{border-color:rgba(255,80,80,.4);background:rgba(255,80,80,.06)}
+.inc-sev-high{border-color:rgba(255,180,0,.3);background:rgba(255,180,0,.05)}
+.inc-sev-med{border-color:var(--bdr);background:rgba(255,255,255,.02)}
+.inc-label{font-size:12px;font-weight:600;color:var(--wht)}
+.inc-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px}
+.inc-crit{background:rgba(255,80,80,.15);color:#FF5050}
+.inc-high{background:rgba(255,180,0,.15);color:#FFB400}
+.inc-res{background:rgba(0,200,100,.15);color:#00C864}
+
+/* ── WHAT ZUUZ IS NOT (compact) ── */
+.not-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.not-card{border-radius:12px;padding:22px;text-align:center;transition:all .2s}
+.not-card.old{background:#F6F6F9;border:1px solid #E0E0EA}
+.not-card.new{background:var(--blk);border:1px solid var(--e)}
+.not-card-icon{font-size:24px;margin-bottom:10px}
+.not-card-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.not-card-label.old-l{color:#999}
+.not-card-label.new-l{color:var(--sky)}
+.not-card-name{font-size:14px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.not-card-name.old-n{color:#333}
+.not-card-name.new-n{color:var(--wht)}
+.not-card-desc{font-size:11px;font-weight:400;line-height:1.5}
+.not-card-desc.old-d{color:#777}
+.not-card-desc.new-d{color:var(--soft)}
+
+/* ── BEFORE / AFTER ── */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.ba-card{border-radius:12px;padding:28px}
+.ba-card.before{background:#F6F6F9;border:1px solid #E0E0EA}
+.ba-card.after{background:var(--blk);border:1px solid var(--e)}
+.ba-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+.ba-label.bl{color:#999}
+.ba-label.al{color:var(--sky)}
+.ba-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:13px;line-height:1.5}
+.ba-item.bi{color:#555}
+.ba-item.ai{color:var(--wht);font-weight:500}
+.ba-total{margin-top:16px;padding-top:14px;border-top:1px solid;font-size:14px;font-weight:800}
+.ba-total.bt{border-color:#E0E0EA;color:#333}
+.ba-total.at{border-color:rgba(0,24,255,.3);color:var(--sky)}
+
+/* ── SECURITY ── */
+.sec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.sec-item{background:var(--panel);border:1px solid var(--bdr);border-radius:12px;padding:22px;display:flex;align-items:flex-start;gap:14px;transition:border-color .2s}
+.sec-item:hover{border-color:rgba(0,24,255,.35)}
+.sec-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.sec-title{font-size:14px;font-weight:800;color:var(--wht);margin-bottom:4px;letter-spacing:-.01em}
+.sec-line{font-size:12px;font-weight:400;color:var(--soft);line-height:1.5}
+
+/* ── INTEGRATION ── */
+.int-row{display:flex;flex-wrap:wrap;gap:4px}
+.int-chip{background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--soft);transition:all .2s;cursor:default}
+.int-chip:hover{color:var(--wht);border-color:rgba(255,255,255,.2)}
+
+/* ── CTA ── */
+.cta-s{background:var(--e);padding:96px 0;text-align:center;position:relative;overflow:hidden}
+
+/* FOOTER */
+footer{background:var(--blk);padding:64px 0 32px;border-top:1px solid var(--bdr)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-col-title{font-size:11px;font-weight:800;color:var(--wht);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.footer-link{font-size:13px;font-weight:400;color:var(--muted);margin-bottom:10px;display:block;transition:color .15s;cursor:pointer}
+.footer-link:hover{color:var(--wht)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-legal{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.04em">ZUUZ</span>
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+  </div>
+  <div class="nav-links">
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link lit">Platform ▾
+        <div class="dropdown">
+          <a class="curr">Platform Overview</a><a>AI Agents</a><a>Workflow Automation</a>
+          <a>Unified Search</a><a>Decision Intelligence</a><a>Agent-to-Agent (A2A)</a>
+          <a>Universal Connectivity</a><a>Security & Governance</a><a href="zuuz-pricing.html">Pricing</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Solutions ▾<div class="dropdown"><a>By Industry</a><a>By Role</a><a>By Use Case</a></div></div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Why ZUUZ ▾<div class="dropdown"><a>How ZUUZ Works</a><a>vs Your ERP or CRM</a><a>vs Chatbots & Copilots</a></div></div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Resources ▾<div class="dropdown"><a>Blogs</a><a>Case Studies</a><a>ROI Calculators</a><a>Agent Library</a></div></div>
+    </div>
+    <div class="nav-link">About</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <span class="nav-link">Sign in</span>
+    <button class="btn-nav">Book a demo →</button>
+  </div>
+</nav>
+
+<!-- PLATFORM SUB-NAV -->
+<div class="sub-nav" id="subNav">
+  <a class="active" onclick="goTo('hero')">Overview</a>
+  <a onclick="goTo('how')">How it works</a>
+  <a onclick="goTo('capabilities')">Capabilities</a>
+  <a onclick="goTo('not')">What we're not</a>
+  <a onclick="goTo('security')">Security</a>
+  <a onclick="goTo('integrations')">Integrations</a>
+</div>
+
+<!-- ══ HERO ════════════════════════════════════════════ -->
+<section class="hero grid-bg" id="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="breadcrumb"><a>zuuz.ai</a><span style="color:var(--muted)">›</span><a>Platform</a><span style="color:var(--muted)">›</span><span style="color:var(--wht)">Platform Overview</span></div>
+
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--e);background:rgba(0,24,255,.08);margin-bottom:20px">
+      <svg class="pulse" width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#A3F3FF"/></svg>
+      <span style="font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky)">Agentic AI Work Platform</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+      <div>
+        <h1 class="display" style="font-size:62px;color:var(--wht);margin-bottom:20px">
+          One platform. Every department. <span style="color:var(--e)">Nothing replaced.</span>
+        </h1>
+        <p style="font-size:18px;font-weight:400;color:var(--soft);line-height:1.65;margin-bottom:32px;max-width:460px">
+          ZUUZ is the AI Operating System that sits above your existing stack — SAP, Salesforce, Teams — running agents across every workflow and connecting every department into one decision surface.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px">
+          <button class="btn-p">Book a demo →</button>
+          <button class="btn-g">Explore agent library ↗</button>
+        </div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <span style="font-size:12px;font-weight:600;color:var(--soft)">✓ <span style="color:var(--sky)">45+ integrations</span></span>
+          <span style="font-size:12px;font-weight:600;color:var(--soft)">✓ <span style="color:var(--sky)">Live in weeks</span></span>
+          <span style="font-size:12px;font-weight:600;color:var(--soft)">✓ <span style="color:var(--sky)">SOC 2 attested</span></span>
+        </div>
+      </div>
+
+      <!-- Platform map — shows everything connected -->
+      <div style="background:var(--panel);border:1px solid var(--bdr);border-radius:16px;padding:28px">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px">Your enterprise — connected</div>
+        <div class="pmap">
+          <div class="pmap-col">
+            <div class="pmap-chip">SAP / Oracle / Dynamics</div>
+            <div class="pmap-chip">Salesforce / HubSpot</div>
+            <div class="pmap-chip">Google Workspace / Teams</div>
+            <div class="pmap-chip">BambooHR / Workday</div>
+            <div class="pmap-chip">Zendesk / SharePoint</div>
+          </div>
+          <div class="pmap-center">
+            <div class="pmap-arrow">→</div>
+            <div class="pmap-core">
+              <svg style="display:block;margin:0 auto 6px" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="white"/></svg>
+              <div class="pmap-core-label">ZUUZ</div>
+              <div class="pmap-core-sub">AI OS</div>
+            </div>
+            <div class="pmap-arrow">→</div>
+          </div>
+          <div class="pmap-col">
+            <div class="pmap-chip" style="border-color:rgba(0,24,255,.3);color:var(--wht)">⚡ Agents execute work</div>
+            <div class="pmap-chip" style="border-color:rgba(0,24,255,.3);color:var(--wht)">⑂ Workflows automated</div>
+            <div class="pmap-chip" style="border-color:rgba(0,24,255,.3);color:var(--wht)">◈ Decisions in minutes</div>
+            <div class="pmap-chip" style="border-color:rgba(0,24,255,.3);color:var(--wht)">🔍 Unified search</div>
+            <div class="pmap-chip" style="border-color:rgba(0,24,255,.3);color:var(--wht)">⬡ A2A autonomous ops</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;font-size:11px;font-weight:600">
+          <span style="color:var(--muted)">Your stack stays intact</span>
+          <span style="color:var(--sky)">Nothing migrated · Nothing replaced</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS — tight & scannable ══════════════ -->
+<section class="section" style="background:var(--blk)" id="how">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="kicker">How it works</div>
+      <h2 class="semi" style="font-size:46px;color:var(--wht)">From your stack to <span style="color:var(--e)">AI-powered decisions.</span></h2>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <span class="step-icon">🔌</span>
+        <div class="step-title">Connect</div>
+        <div class="step-line">Native API into 45+ systems. No custom build. Your IT team touches nothing.</div>
+        <div class="step-proof">⚡ Live in days, not months</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <span class="step-icon">🤖</span>
+        <div class="step-title">Deploy agents</div>
+        <div class="step-line">Pick from the agent library. Pre-built for every department. Running the same day.</div>
+        <div class="step-proof">⚡ No configuration required</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <span class="step-icon">⚙️</span>
+        <div class="step-title">Automate workflows</div>
+        <div class="step-line">Drag-and-drop builder. Cross-system logic. No code — you build the workflow, not the plumbing.</div>
+        <div class="step-proof">⚡ Build once, every system runs it</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <span class="step-icon">🎯</span>
+        <div class="step-title">Decide in minutes</div>
+        <div class="step-line">AI assembles cross-system context. Verdict with evidence. You review a recommendation, not a data stack.</div>
+        <div class="step-proof">⚡ 5 days → same-day approvals</div>
+      </div>
+    </div>
+
+    <!-- Deployment timeline — compact -->
+    <div style="margin-top:8px;background:var(--panel);border:1px solid var(--bdr);border-radius:12px;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Deployment timeline</span>
+      <div style="display:flex;gap:0;flex:1;max-width:560px;position:relative">
+        <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--bdr);transform:translateY(-50%)"></div>
+        <div style="position:absolute;top:50%;left:0;width:75%;height:1px;background:var(--e);transform:translateY(-50%)"></div>
+        <div style="display:flex;justify-content:space-between;width:100%;position:relative">
+          <div style="text-align:center">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--e);margin:0 auto 6px"></div>
+            <div style="font-size:12px;font-weight:800;color:var(--e)">Day 1–5</div>
+            <div style="font-size:10px;color:var(--muted)">Integrations live</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--e);margin:0 auto 6px"></div>
+            <div style="font-size:12px;font-weight:800;color:var(--e)">Week 2</div>
+            <div style="font-size:10px;color:var(--muted)">First agents running</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--e);margin:0 auto 6px"></div>
+            <div style="font-size:12px;font-weight:800;color:var(--e)">Week 3–4</div>
+            <div style="font-size:10px;color:var(--muted)">Department live</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--bdr);border:2px solid var(--e);margin:0 auto 6px"></div>
+            <div style="font-size:12px;font-weight:800;color:var(--soft)">Quarter 1</div>
+            <div style="font-size:10px;color:var(--muted)">ROI measurable</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-p" style="font-size:12px;padding:10px 20px">Book scoping call →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAPABILITIES — tabs + UI mockup ══════════════ -->
+<section class="section" style="background:var(--ink)" id="capabilities">
+  <div class="container">
+    <div style="margin-bottom:28px">
+      <div class="kicker">Six capabilities. One infrastructure.</div>
+      <h2 class="semi" style="font-size:46px;color:var(--wht);max-width:560px">Everything your enterprise needs. <span style="color:var(--e)">Nothing it doesn't.</span></h2>
+    </div>
+    <div class="cap-tabs" id="capTabs">
+      <div class="cap-tab active" onclick="switchCap(0)">⚡ AI Agents</div>
+      <div class="cap-tab" onclick="switchCap(1)">⑂ Workflow Automation</div>
+      <div class="cap-tab" onclick="switchCap(2)">🔍 Unified Search</div>
+      <div class="cap-tab" onclick="switchCap(3)">◈ Decision Intelligence</div>
+      <div class="cap-tab" onclick="switchCap(4)">⬡ Agent-to-Agent (A2A)</div>
+      <div class="cap-tab" onclick="switchCap(5)">🛡 Security & Governance</div>
+    </div>
+    <div class="cap-body-wrap" id="capBody"><!-- JS --></div>
+  </div>
+</section>
+
+<!-- ══ WHAT ZUUZ IS NOT — compact visual ══════════════ -->
+<section class="section" style="background:var(--wht);color:var(--blk)" id="not">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="kicker blue">Positioning</div>
+      <h2 class="semi" style="font-size:46px;color:var(--blk)">Not a feature. <span style="color:var(--e)">A new category.</span></h2>
+      <p style="font-size:16px;font-weight:400;color:#555;margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6">
+        If AI helps you do a task faster, it's a copilot. If AI <strong>does the task</strong> and you review the output — that's ZUUZ.
+      </p>
+    </div>
+
+    <div class="not-grid">
+      <div class="not-card old">
+        <div class="not-card-icon">💬</div>
+        <div class="not-card-label old-l">They call it</div>
+        <div class="not-card-name old-n">A Chatbot</div>
+        <div class="not-card-desc old-d">Answers questions on demand. Waits to be asked.</div>
+      </div>
+      <div class="not-card old">
+        <div class="not-card-icon">🤝</div>
+        <div class="not-card-label old-l">They call it</div>
+        <div class="not-card-name old-n">A Copilot</div>
+        <div class="not-card-desc old-d">Makes humans faster. Human still drives every step.</div>
+      </div>
+      <div class="not-card old">
+        <div class="not-card-icon">🔩</div>
+        <div class="not-card-label old-l">They call it</div>
+        <div class="not-card-name old-n">An ERP add-on</div>
+        <div class="not-card-desc old-d">A module inside your existing system. Limited to one data source.</div>
+      </div>
+      <div class="not-card old">
+        <div class="not-card-icon">🔀</div>
+        <div class="not-card-label old-l">They call it</div>
+        <div class="not-card-name old-n">A Workflow Tool</div>
+        <div class="not-card-desc old-d">Automates steps humans designed. Doesn't redesign the work.</div>
+      </div>
+      <div class="not-card new">
+        <div class="not-card-icon" style="filter:brightness(1.5)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+        </div>
+        <div class="not-card-label new-l">This is</div>
+        <div class="not-card-name new-n">ZUUZ</div>
+        <div class="not-card-desc new-d">Agents execute the work. You review the output. AI does the doing.</div>
+      </div>
+    </div>
+
+    <!-- Before / After -->
+    <div style="margin-top:32px">
+      <div style="text-align:center;margin-bottom:20px">
+        <div class="kicker blue">See the difference</div>
+        <h3 class="semi" style="font-size:32px;color:var(--blk)">Contract review — before and after.</h3>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label bl">❌ &nbsp;Without ZUUZ — 6 hours</div>
+          <div class="ba-item bi"><span>📧</span> Contract lands in lawyer's inbox</div>
+          <div class="ba-item bi"><span>👁</span> Lawyer reads full document manually</div>
+          <div class="ba-item bi"><span>🔎</span> Identifies risk clauses from experience</div>
+          <div class="ba-item bi"><span>📊</span> Writes summary and risk assessment</div>
+          <div class="ba-item bi"><span>📋</span> Shares output with deal team</div>
+          <div class="ba-total bt">6 hours per contract · $1,200 in lawyer time</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label al">✓ &nbsp;With ZUUZ — 30 minutes</div>
+          <div class="ba-item ai"><span>📨</span> Contract received → agent triggered automatically</div>
+          <div class="ba-item ai"><span>🤖</span> Agent reads full document in 3 minutes</div>
+          <div class="ba-item ai"><span>⚠️</span> Risk clauses flagged with location + severity</div>
+          <div class="ba-item ai"><span>📊</span> Risk score generated with full evidence trail</div>
+          <div class="ba-item ai"><span>✅</span> Lawyer reviews the output — 27 minutes</div>
+          <div class="ba-total at">30 minutes · 5.5 hrs saved · $220K/yr per lawyer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECURITY — icon + title + one line ══════════════ -->
+<section class="section" style="background:var(--ink)" id="security">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="kicker">Security & Governance</div>
+      <h2 class="semi" style="font-size:44px;color:var(--wht)">Built for <span style="color:var(--e)">enterprise trust.</span></h2>
+    </div>
+    <div class="sec-row">
+      <div class="sec-item">
+        <div class="sec-icon">🔐</div>
+        <div><div class="sec-title">SOC 2 Type I Attested</div><div class="sec-line">Independent verification. Enterprise security baseline met.</div></div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">👥</div>
+        <div><div class="sec-title">Role-Based Access — 11 Personas</div><div class="sec-line">The sidebar, KPIs, and workflows all change by role — not just tab permissions.</div></div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">📋</div>
+        <div><div class="sec-title">Tamper-Evident Audit Trail</div><div class="sec-line">Every AI action permanently logged. Immutable. Always traceable.</div></div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🔒</div>
+        <div><div class="sec-title">System-Enforced Legal Hold</div><div class="sec-line">Download disabled at system level. Not a procedure — a control.</div></div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🌐</div>
+        <div><div class="sec-title">API-Only. Zero Data Duplication.</div><div class="sec-line">Disconnect ZUUZ — your SAP and Salesforce are completely untouched.</div></div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🚫</div>
+        <div><div class="sec-title">No Model Training on Your Data</div><div class="sec-line">What happens in your enterprise stays in your enterprise. Full stop.</div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;text-align:center">
+      <a style="font-size:13px;font-weight:700;color:var(--sky);display:inline-flex;align-items:center;gap:6px">Full security overview ↓ &nbsp; Download brief</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INTEGRATIONS ═══════════════════════════════════ -->
+<section style="background:var(--panel);padding:64px 0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)" id="integrations">
+  <div class="container">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="kicker">Universal Connectivity</div>
+        <h2 class="semi" style="font-size:38px;color:var(--wht)">45+ integrations. <span style="color:var(--e)">Zero custom build.</span></h2>
+      </div>
+      <a style="font-size:13px;font-weight:700;color:var(--sky)">View all →</a>
+    </div>
+    <div style="margin-bottom:10px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">ERP</div>
+    <div class="int-row" style="margin-bottom:16px">
+      <div class="int-chip">SAP</div><div class="int-chip">Oracle</div><div class="int-chip">Dynamics 365</div><div class="int-chip">NetSuite</div><div class="int-chip">Zoho Books</div>
+    </div>
+    <div style="margin-bottom:10px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">CRM & Marketing</div>
+    <div class="int-row" style="margin-bottom:16px">
+      <div class="int-chip">Salesforce</div><div class="int-chip">HubSpot</div><div class="int-chip">Zoho CRM</div>
+    </div>
+    <div style="margin-bottom:10px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Productivity & HR</div>
+    <div class="int-row" style="margin-bottom:16px">
+      <div class="int-chip">Google Workspace</div><div class="int-chip">Microsoft Teams</div><div class="int-chip">SharePoint</div><div class="int-chip">OneDrive</div><div class="int-chip">BambooHR</div><div class="int-chip">Workday</div>
+    </div>
+    <div style="margin-bottom:10px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Support & Commerce</div>
+    <div class="int-row">
+      <div class="int-chip">Zendesk</div><div class="int-chip">ManageEngine</div><div class="int-chip">Amazon</div><div class="int-chip">Walmart</div><div class="int-chip">Shopify</div><div class="int-chip">WhatsApp</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════ -->
+<section class="cta-s">
+  <svg style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;opacity:.1" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="white"/></svg>
+  <div class="container" style="position:relative">
+    <div class="kicker">Ready to go deeper?</div>
+    <h2 class="display" style="font-size:52px;color:var(--wht);margin-bottom:18px;max-width:620px;margin-left:auto;margin-right:auto">
+      See it running on your <span style="color:var(--blk)">actual stack.</span>
+    </h2>
+    <p style="font-size:17px;font-weight:400;color:rgba(255,255,255,.82);max-width:500px;margin:0 auto 36px;line-height:1.6">30 minutes. Bring one broken workflow. We show you the agent, the time saved, and the integration live.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button style="padding:15px 30px;background:var(--wht);color:var(--e);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px">Book a demo →</button>
+      <button style="padding:15px 26px;background:var(--blk);color:var(--wht);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;cursor:pointer">Download platform brief ↓</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:24px;font-weight:900;font-style:italic;letter-spacing:-.04em">ZUUZ</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:400;color:var(--muted);margin-top:14px;max-width:250px;line-height:1.7">Agentic AI Work Platform for the enterprise. One AI OS. Every department. Connected.</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:10px;letter-spacing:.14em;text-transform:uppercase">Powered by Cloud Box AI</div>
+      </div>
+      <div><div class="footer-col-title">Platform</div>
+        <a class="footer-link" style="color:var(--sky)">Platform Overview</a>
+        <a class="footer-link">AI Agents</a><a class="footer-link">Workflow Automation</a>
+        <a class="footer-link">Decision Intelligence</a><a class="footer-link">A2A</a><a class="footer-link">Pricing</a>
+      </div>
+      <div><div class="footer-col-title">Solutions</div>
+        <a class="footer-link">By Industry</a><a class="footer-link">By Role</a>
+        <a class="footer-link">By Use Case</a><a class="footer-link">ROI Calculator</a>
+      </div>
+      <div><div class="footer-col-title">Company</div>
+        <a class="footer-link">About</a><a class="footer-link">Careers</a>
+        <a class="footer-link">Contact</a><a class="footer-link">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2026 ZUUZ. All rights reserved.</span>
+      <span class="footer-legal">zuuz.ai · Legacy Town Center, Plano TX 75024</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>30)},{passive:true});
+
+// SUB-NAV HIGHLIGHT
+const sIds=['hero','how','capabilities','not','security','integrations'];
+const sLinks=document.querySelectorAll('.sub-nav a');
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  sIds.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id;});
+  sLinks.forEach((l,i)=>l.classList.toggle('active',sIds[i]===cur));
+},{passive:true});
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+// CAPABILITY DATA
+const caps=[
+  {
+    tag:"01 — AI Agents",
+    title:"The agent does the task.\nYou review the output.",
+    oneliner:"An AI agent isn't a chatbot you ask questions. It's a worker that handles a task end-to-end — without you triggering it.",
+    proof:[
+      ["Contract Risk Review","6 hrs saved / contract — reads, flags, scores risk"],
+      ["Eagle-Eye Leave Review","7 systems pulled simultaneously at point of approval"],
+      ["Procurement Supplier AI","4 hrs saved / PO — compares, generates, routes"],
+      ["Email Summary Agent","45 min / day — inbox read, replies drafted, actions extracted"],
+      ["Meeting Intelligence","20 min / meeting — transcribed, action items with owners"],
+      ["CEO Approval Cockpit","5 days → same-day — full context assembled in real time"],
+    ],
+    link:"Explore the agent library →",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">Agent Library</span></div>
+        <div class="mock-body">
+          <div class="mock-agent-row"><span style="font-size:14px">📄</span><span class="mock-agent-name">Contract Risk Review</span><span class="mock-agent-save">6 hrs / contract</span></div>
+          <div class="mock-agent-row"><span style="font-size:14px">👥</span><span class="mock-agent-name">Eagle-Eye Leave Review</span><span class="mock-agent-save">Instant · 7 systems</span></div>
+          <div class="mock-agent-row"><span style="font-size:14px">⚙️</span><span class="mock-agent-name">Procurement Supplier AI</span><span class="mock-agent-save">4 hrs / PO</span></div>
+          <div class="mock-agent-row"><span style="font-size:14px">📧</span><span class="mock-agent-name">Email Summary Agent</span><span class="mock-agent-save">45 min / day</span></div>
+          <div class="mock-agent-row"><span style="font-size:14px">🎙</span><span class="mock-agent-name">Meeting Intelligence</span><span class="mock-agent-save">20 min / meeting</span></div>
+          <div class="mock-agent-row"><span style="font-size:14px">📊</span><span class="mock-agent-name">CEO Approval Cockpit</span><span class="mock-agent-save">Same-day decisions</span></div>
+          <div style="text-align:center;margin-top:10px;font-size:11px;font-weight:600;color:var(--muted)">+ more agents across every department →</div>
+        </div>
+      </div>`
+  },
+  {
+    tag:"02 — Workflow Automation",
+    title:"Build the logic.\nNot the plumbing.",
+    oneliner:"Drag a trigger, connect a system, add logic, define the output. Every integration is already wired — you just build the workflow.",
+    proof:[
+      ["No-code builder","Triggers, conditions, actions — drag-and-drop across every system"],
+      ["Full conditional logic","IF/ELSE, SWITCH, WAIT, LOOP, TRY/CATCH — no limitations"],
+      ["Pre-wired integrations","45+ systems already connected — no API work needed"],
+      ["Pre-built templates","Onboarding, leave approval, campaign ROI, PO routing and more"],
+      ["Role-based permissions","Control who can trigger, edit, or view each workflow"],
+    ],
+    link:"See workflow templates →",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">Workflow Builder — Contract Approval</span></div>
+        <div class="mock-body">
+          <div class="mock-workflow-step done"><span>✅</span> <span>Trigger: Contract received via email</span></div>
+          <div class="mock-workflow-step done"><span>✅</span> <span>Agent: Extract and classify document</span></div>
+          <div class="mock-workflow-step active"><span style="color:var(--sky)">⚡</span> <span>Agent: Run Contract Risk Review → score output</span></div>
+          <div class="mock-workflow-step"><span>⏳</span> <span>IF risk = High → escalate to General Counsel</span></div>
+          <div class="mock-workflow-step"><span>⏳</span> <span>ELSE → route to deal desk for approval</span></div>
+          <div class="mock-workflow-step"><span>⏳</span> <span>Action: Write back result to DMS + notify Slack</span></div>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(0,24,255,.08);border-radius:6px;font-size:11px;font-weight:600;color:var(--sky)">Running on: SAP · Salesforce · Google Drive · Slack</div>
+        </div>
+      </div>`
+  },
+  {
+    tag:"03 — Unified Search",
+    title:"One query.\nEvery system.",
+    oneliner:"Documents, emails, meetings, files — searched across every connected system in one interface. Access-controlled. Voice-enabled.",
+    proof:[
+      ["10,000+ documents","Searched simultaneously across SharePoint, OneDrive, email, servers"],
+      ["Dual-mode","Internal org knowledge + real-time web — same search bar"],
+      ["Access-controlled","Results respect DMS permissions automatically"],
+      ["Voice-enabled","Speak the query — powered by ZUUZ AI + Google Gemini"],
+      ["Workflow trigger","Type 'apply for leave' → launches the request inline"],
+    ],
+    link:"See Unified Search →",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">ZUUZ Unified Search</span></div>
+        <div class="mock-body">
+          <div class="mock-search-bar">🔍 <span style="color:var(--wht)">Meridian vendor agreement 2024</span><span class="mock-cursor"></span></div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Results across all connected systems</div>
+          <div class="mock-result"><div class="mock-result-title">Meridian Corp — Master Service Agreement v3.pdf</div><div class="mock-result-src">SharePoint / Legal / Contracts · Last modified Jan 12, 2024</div></div>
+          <div class="mock-result"><div class="mock-result-title">RE: Meridian renewal terms — email thread (14 messages)</div><div class="mock-result-src">Outlook · Robert Chen · Mar 3, 2024</div></div>
+          <div class="mock-result"><div class="mock-result-title">Q4 Vendor Review — Meridian notes</div><div class="mock-result-src">Teams Meeting · Dec 15, 2023 · 34-min summary available</div></div>
+          <div style="margin-top:10px;padding:7px 10px;background:rgba(0,24,255,.08);border-radius:6px;font-size:11px;font-weight:600;color:var(--sky)">✓ Access-controlled · Showing 3 of 24 results</div>
+        </div>
+      </div>`
+  },
+  {
+    tag:"04 — Decision Intelligence",
+    title:"AI assembles the context.\nYou make the call.",
+    oneliner:"Cross-system context assembled automatically before you open the approval. AI verdict with evidence. Decisions in minutes, not days.",
+    proof:[
+      ["CEO Approval Cockpit","AR, open tickets, delivery delays, 90-day sentiment — real time"],
+      ["AI verdict","Recommend Approve / Approve with Conditions / Recommend Reject — with evidence"],
+      ["Eagle-Eye Review","7 systems pulled simultaneously at point of leave approval"],
+      ["Transparent risk scoring","Every factor shown — not a black box, not a gut call"],
+      ["Full audit log","Every decision, every data point at time of decision — permanently recorded"],
+    ],
+    link:"See the CEO Approval Cockpit →",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">CEO Approval Cockpit — Meridian $820K</span></div>
+        <div class="mock-body">
+          <div class="mock-verdict">AI Recommendation: Approve ✓ — Low risk · 6 systems reviewed</div>
+          <div class="mock-row alt"><span class="mock-label">Outstanding AR</span><span class="mock-val">$12,400 <div class="mock-status" style="background:#00E676"></div></span></div>
+          <div class="mock-row"><span class="mock-label">Open Support Tickets</span><span class="mock-val">1 — minor <div class="mock-status" style="background:#00E676"></div></span></div>
+          <div class="mock-row alt"><span class="mock-label">Delivery Status</span><span class="mock-val">On track <div class="mock-status" style="background:#00E676"></div></span></div>
+          <div class="mock-row"><span class="mock-label">90-Day Sentiment</span><span class="mock-val">Positive — 87% <div class="mock-status" style="background:#00E676"></div></span></div>
+          <div class="mock-row alt"><span class="mock-label">Credit Exposure</span><span class="mock-val">$2.1M — within limit <div class="mock-status" style="background:#FFB800"></div></span></div>
+        </div>
+      </div>`
+  },
+  {
+    tag:"05 — Agent-to-Agent (A2A)",
+    title:"Agents that work\nwhile no one's watching.",
+    oneliner:"Agents monitor your systems continuously, communicate with each other, and resolve incidents — without a human triggering any step.",
+    proof:[
+      ["Incident Inbox","AI classifies by severity in real time — no human triage needed"],
+      ["Resolution Workspace","Step-by-step agent execution with agent-to-agent comms logged"],
+      ["System Verification","Continuous health checks across all integrations — breaks flagged early"],
+      ["A2A Logs","Full audit trail of every agent decision and action. No black box."],
+      ["Zero-touch resolution","Defined incident types handled end-to-end — escalates only when needed"],
+    ],
+    link:"See A2A in action →",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">A2A — Incident Inbox · Live</span></div>
+        <div class="mock-body">
+          <div class="mock-incident inc-sev-crit"><span class="mock-label" style="color:var(--wht)">ERP sync failure — Procurement module</span><span class="inc-badge inc-crit">Critical</span></div>
+          <div class="mock-incident inc-sev-high"><span class="mock-label" style="color:var(--wht)">BambooHR leave sync — 3 records pending</span><span class="inc-badge inc-high">High</span></div>
+          <div class="mock-incident inc-sev-med"><span class="mock-label">Zendesk webhook timeout — retrying</span><span class="inc-badge inc-res">Resolved</span></div>
+          <div class="mock-incident inc-sev-med"><span class="mock-label">Salesforce API rate limit — auto-queued</span><span class="inc-badge inc-res">Resolved</span></div>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(0,24,255,.08);border-radius:6px;font-size:11px;font-weight:600;color:var(--sky)">⬡ A2A resolving Critical incident — no human trigger needed</div>
+        </div>
+      </div>`
+  },
+  {
+    tag:"06 — Security & Governance",
+    title:"Every action logged.\nEvery decision traceable.",
+    oneliner:"SOC 2 attested. Role-based access across 11 personas. Legal Hold enforced at system level. Your data is never used to train any model.",
+    proof:[
+      ["SOC 2 Type I","Independent verification of security controls — enterprise baseline met"],
+      ["RBAC — 11 roles","Sidebar, KPIs, and workflows all change by role. Not just tab permissions."],
+      ["Tamper-evident audit trail","Every AI action permanently recorded — immutable, always traceable"],
+      ["System-enforced Legal Hold","Downloads disabled at system level — not a procedure, a control"],
+      ["No model training","Your enterprise data stays yours. No exceptions."],
+    ],
+    link:"Download security brief ↓",
+    mockup:`
+      <div class="mock-window">
+        <div class="mock-chrome"><div class="mock-dot" style="background:#FF605C"></div><div class="mock-dot" style="background:#FFBD44"></div><div class="mock-dot" style="background:#00CA4E"></div><span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:8px">Audit Trail — Contract Review Agent</span></div>
+        <div class="mock-body">
+          <div class="mock-row alt"><span class="mock-label">Agent triggered</span><span class="mock-val" style="font-size:10px">09:14:32 · Contract_Meridian_v3.pdf</span></div>
+          <div class="mock-row"><span class="mock-label">Document read</span><span class="mock-val" style="font-size:10px">09:14:45 · 34 pages · 13s</span></div>
+          <div class="mock-row alt"><span class="mock-label">Risk clauses flagged</span><span class="mock-val" style="font-size:10px">Cl. 8.2, 11.4, 14.1 · Medium</span></div>
+          <div class="mock-row"><span class="mock-label">Risk score generated</span><span class="mock-val" style="font-size:10px">Medium · Evidence: 3 clauses</span></div>
+          <div class="mock-row alt"><span class="mock-label">Reviewed by</span><span class="mock-val" style="font-size:10px">R. Chen · 09:42:10 · Approved</span></div>
+          <div style="margin-top:10px;padding:7px 10px;background:rgba(0,200,100,.06);border:1px solid rgba(0,200,100,.2);border-radius:6px;font-size:11px;font-weight:600;color:#00C864">🔒 Tamper-evident · Cannot be modified or deleted</div>
+        </div>
+      </div>`
+  }
+];
+
+function switchCap(idx){
+  document.querySelectorAll('.cap-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  const c=caps[idx];
+  document.getElementById('capBody').innerHTML=`
+    <div class="cap-left fade-in">
+      <div class="cap-tagline">${c.tag}</div>
+      <div class="cap-title">${c.title.replace('\n','<br>')}</div>
+      <div class="cap-one-liner">${c.oneliner}</div>
+      <div class="cap-proof">
+        ${c.proof.map(p=>`<div class="cap-proof-item"><span style="color:var(--sky);flex-shrink:0">✓</span><span><b>${p[0]}</b> — ${p[1]}</span></div>`).join('')}
+      </div>
+      <a class="cap-link">${c.link}</a>
+    </div>
+    <div class="cap-right fade-in">
+      <div class="cap-ui-label">Live UI preview</div>
+      ${c.mockup}
+    </div>
+  `;
+}
+switchCap(0);
+</script>
+</body>
+</html>

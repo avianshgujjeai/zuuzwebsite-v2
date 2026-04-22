@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>ZUUZ Platform Overview</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://zuuz.ai/">
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZUUZ Platform Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --e:#0018FF;--sky:#A3F3FF;--blk:#000000;--wht:#FFFFFF;
+  --ink:#080810;--panel:#0D0D18;--bdr:#1A1A2E;--muted:#555570;--soft:#888899;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--ink);color:var(--wht);overflow-x:hidden}
+.display{font-weight:900;letter-spacing:-.04em;line-height:1.0;font-style:italic}
+.semi{font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.body-t{font-weight:400;line-height:1.65;color:var(--soft)}
+a{text-decoration:none;cursor:pointer;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.section{padding:96px 0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.bg-ink{background:var(--ink)}
+.bg-black{background:var(--blk)}
+.bg-white{background:var(--wht);color:var(--blk)}
+.bg-panel{background:var(--panel)}
+.grid-bg{background-image:linear-gradient(var(--bdr) 1px,transparent 1px),linear-gradient(90deg,var(--bdr) 1px,transparent 1px);background-size:56px 56px}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.2)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(0,24,255,0)}50%{box-shadow:0 0 32px 8px rgba(0,24,255,.28)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lineGrow{from{width:0}to{width:100%}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
+nav.scrolled{background:rgba(8,8,16,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{font-size:13px;font-weight:500;color:var(--soft);padding:8px 15px;border-radius:4px;cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:4px;position:relative}
+.nav-link:hover{color:var(--wht)}
+.nav-item:hover .dropdown{display:block}
+.dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:var(--panel);border:1px solid var(--bdr);border-radius:10px;padding:8px;min-width:210px;box-shadow:0 24px 48px rgba(0,0,0,.55)}
+.dropdown a{display:block;padding:9px 14px;border-radius:6px;font-size:13px;font-weight:500;transition:background .15s}
+.dropdown a:hover{background:rgba(255,255,255,.06)}
+.dropdown a.active-item{color:var(--sky)}
+.btn-nav{display:inline-flex;align-items:center;gap:7px;background:var(--e);color:var(--wht);border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 20px;border-radius:6px;transition:all .2s}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--e);color:var(--wht);border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:13px 26px;border-radius:6px;transition:all .2s;white-space:nowrap}
+.btn-primary:hover{filter:brightness(1.14);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,24,255,.4)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--wht);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;padding:13px 22px;border-radius:6px;border:1px solid var(--bdr);transition:all .2s}
+.btn-ghost:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.25)}
+
+/* ── KICKER ── */
+.kicker{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);margin-bottom:14px}
+.kicker.blue{color:var(--e)}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:24px}
+.breadcrumb span{color:var(--muted)}
+.breadcrumb a{color:var(--soft);transition:color .15s}
+.breadcrumb a:hover{color:var(--wht)}
+
+/* ── HERO ── */
+.hero{position:relative;padding:148px 0 80px;overflow:hidden}
+.hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(0,24,255,.2) 0%,transparent 65%);top:-150px;right:-150px;pointer-events:none}
+.glow-left{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,24,255,.1) 0%,transparent 70%);bottom:-100px;left:-100px;pointer-events:none}
+.badge-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--e);background:rgba(0,24,255,.08);margin-bottom:20px}
+.badge-text{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky)}
+
+/* ── THREE LAYER TABS ── */
+.layer-tabs{display:flex;gap:4px;margin-bottom:0;border-bottom:1px solid var(--bdr)}
+.layer-tab{padding:12px 24px;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.layer-tab:hover{color:var(--wht)}
+.layer-tab.active{color:var(--wht);border-bottom-color:var(--e)}
+.layer-content{display:none;padding:40px 0 0}
+.layer-content.active{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+
+/* ── CAPABILITY DEEP DIVE ── */
+.cap-nav{display:flex;flex-direction:column;gap:3px}
+.cap-nav-item{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;
+  cursor:pointer;transition:all .2s;border:1px solid transparent
+}
+.cap-nav-item:hover{background:rgba(255,255,255,.03);color:var(--wht)}
+.cap-nav-item.active{background:rgba(0,24,255,.1);border-color:var(--e);color:var(--wht)}
+.cap-nav-item.active .cap-nav-icon{color:var(--sky)}
+.cap-nav-icon{font-size:18px;width:22px;text-align:center;color:var(--muted);flex-shrink:0}
+.cap-nav-label{font-size:14px;font-weight:700;color:inherit}
+.cap-nav-arrow{margin-left:auto;font-size:12px;color:var(--e);opacity:0;transition:opacity .2s}
+.cap-nav-item.active .cap-nav-arrow{opacity:1}
+.cap-panel{background:var(--panel);border:1px solid var(--bdr);border-radius:16px;padding:36px;min-height:420px}
+.cap-panel-kicker{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);margin-bottom:12px}
+.cap-panel-title{font-size:28px;font-weight:900;letter-spacing:-.03em;color:var(--wht);margin-bottom:16px;line-height:1.1}
+.cap-panel-headline{font-size:15px;font-weight:700;color:var(--wht);line-height:1.55;margin-bottom:12px;padding:16px 18px;background:rgba(0,24,255,.1);border-left:3px solid var(--e);border-radius:6px}
+.cap-panel-body{font-size:14px;font-weight:400;color:var(--soft);line-height:1.7;margin-bottom:24px}
+.proof-list{display:flex;flex-direction:column;gap:8px}
+.proof-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:var(--soft)}
+.proof-check{color:var(--sky);flex-shrink:0;margin-top:1px}
+.proof-highlight{color:var(--wht);font-weight:600}
+.use-case-tag{display:inline-block;margin-top:20px;padding:8px 16px;border-radius:6px;background:rgba(163,243,255,.08);border:1px solid rgba(163,243,255,.2);font-size:12px;font-weight:700;color:var(--sky)}
+
+/* ── WHAT ZUUZ IS NOT ── */
+.not-table{width:100%;border-collapse:collapse}
+.not-table th{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--bdr);text-align:left}
+.not-table td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--bdr);vertical-align:top;line-height:1.5}
+.not-table tr:last-child td{border-bottom:none}
+.not-table tr:hover td{background:rgba(255,255,255,.02)}
+.not-col-they{color:var(--soft);font-weight:500}
+.not-col-why{color:var(--muted);font-weight:400}
+.not-col-say{color:var(--wht);font-weight:600}
+.cross{color:#FF5555;font-weight:700}
+
+/* ── HOW IT WORKS FLOW ── */
+.flow-step{position:relative;padding:28px;background:var(--panel);border:1px solid var(--bdr);border-radius:14px;transition:border-color .2s}
+.flow-step:hover{border-color:rgba(0,24,255,.4)}
+.flow-num{font-size:48px;font-weight:900;letter-spacing:-.04em;color:rgba(0,24,255,.2);line-height:1;margin-bottom:12px;font-style:italic}
+.flow-icon{width:44px;height:44px;border-radius:10px;background:var(--e);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.flow-title{font-size:17px;font-weight:800;color:var(--wht);margin-bottom:8px;letter-spacing:-.02em}
+.flow-body{font-size:13px;font-weight:400;color:var(--soft);line-height:1.6}
+.flow-connector{display:flex;align-items:center;justify-content:center;color:var(--e);font-size:20px;font-weight:700;padding:0 4px;flex-shrink:0}
+
+/* ── AI NATIVE COMPARISON ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.compare-card{padding:32px;border-radius:14px}
+.compare-card.bad{background:#F7F7F9;border:1px solid #E0E0EA}
+.compare-card.good{background:var(--blk);border:1px solid var(--e)}
+.compare-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px}
+.compare-label.bad-label{color:#999}
+.compare-label.good-label{color:var(--sky)}
+.compare-title{font-size:18px;font-weight:800;margin-bottom:12px;letter-spacing:-.02em}
+.compare-items{display:flex;flex-direction:column;gap:10px}
+.compare-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}
+.compare-item.bad-item{color:#666}
+.compare-item.good-item{color:var(--wht)}
+
+/* ── CONTEXT PACK VISUAL ── */
+.context-pack{background:var(--panel);border:1px solid var(--bdr);border-radius:16px;padding:28px;position:relative;overflow:hidden}
+.cp-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,24,255,.18) 0%,transparent 70%);top:-80px;right:-80px;pointer-events:none}
+.cp-label{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-bottom:16px}
+.cp-center{background:var(--e);border-radius:10px;padding:14px 20px;text-align:center;margin-bottom:16px;animation:glow 3s ease-in-out infinite}
+.cp-center-label{font-size:13px;font-weight:900;color:var(--wht);letter-spacing:.06em}
+.cp-center-sub{font-size:10px;font-weight:400;color:rgba(255,255,255,.7);margin-top:3px}
+.cp-sources{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px}
+.cp-source{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:8px;padding:10px;text-align:center;font-size:11px;font-weight:600;color:var(--soft)}
+.cp-source span{display:block;font-size:9px;font-weight:400;color:var(--muted);margin-top:2px}
+.cp-output{background:rgba(0,24,255,.08);border:1px solid rgba(0,24,255,.25);border-radius:8px;padding:12px 16px;font-size:12px;font-weight:600;color:var(--sky);text-align:center}
+
+/* ── SECURITY BADGES ── */
+.security-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.security-card{background:var(--panel);border:1px solid var(--bdr);border-radius:12px;padding:24px;text-align:center;transition:border-color .2s}
+.security-card:hover{border-color:var(--e)}
+.security-icon{font-size:28px;margin-bottom:12px}
+.security-title{font-size:14px;font-weight:800;color:var(--wht);margin-bottom:6px;letter-spacing:-.01em}
+.security-body{font-size:12px;font-weight:400;color:var(--soft);line-height:1.55}
+
+/* ── PLATFORM SUB-NAV ── */
+.sub-nav{background:var(--panel);border-bottom:1px solid var(--bdr);padding:0 48px;display:flex;gap:0;position:sticky;top:68px;z-index:90}
+.sub-nav a{display:block;padding:14px 18px;font-size:12px;font-weight:600;color:var(--soft);border-bottom:2px solid transparent;transition:all .2s;cursor:pointer;white-space:nowrap}
+.sub-nav a:hover{color:var(--wht)}
+.sub-nav a.active{color:var(--wht);border-bottom-color:var(--e)}
+
+/* ── FOOTER ── */
+footer{background:var(--blk);padding:64px 0 32px;border-top:1px solid var(--bdr)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-link{font-size:13px;font-weight:400;color:var(--muted);margin-bottom:10px;display:block;transition:color .15s;cursor:pointer}
+.footer-link:hover{color:var(--wht)}
+.footer-col-title{font-size:11px;font-weight:800;color:var(--wht);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-legal{font-size:12px;font-weight:400;color:var(--muted)}
+
+/* ── CTA ── */
+.cta-section{background:var(--e);padding:100px 0;position:relative;overflow:hidden;text-align:center}
+.cta-section .kicker{color:var(--sky)}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav id="nav">
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.04em;color:var(--wht)">ZUUZ</span>
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+  </div>
+  <div class="nav-links">
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link" style="color:var(--wht)">Platform <span style="font-size:11px">▾</span>
+        <div class="dropdown">
+          <a class="active-item">Platform Overview</a><a>AI Agents</a><a>Workflow Automation</a>
+          <a>Unified Search</a><a>Decision Intelligence</a><a>Agent-to-Agent (A2A)</a>
+          <a>Universal Connectivity</a><a>Security & Governance</a><a href="zuuz-pricing.html">Pricing</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Solutions <span style="font-size:11px">▾</span>
+        <div class="dropdown"><a>By Industry</a><a>By Role</a><a>By Use Case</a></div>
+      </div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Why ZUUZ <span style="font-size:11px">▾</span>
+        <div class="dropdown"><a>How ZUUZ Works</a><a>vs Your ERP or CRM</a><a>vs Chatbots & Copilots</a><a>vs Legacy Workflow Tools</a></div>
+      </div>
+    </div>
+    <div class="nav-item" style="position:relative">
+      <div class="nav-link">Resources <span style="font-size:11px">▾</span>
+        <div class="dropdown"><a>Blogs</a><a>Case Studies</a><a>ROI Calculators</a><a>Agent Library</a><a>Documentation</a></div>
+      </div>
+    </div>
+    <div class="nav-link">About</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <span class="nav-link">Sign in</span>
+    <button class="btn-nav">Book a demo →</button>
+  </div>
+</nav>
+
+<!-- ══ PLATFORM SUB-NAV ══════════════════════════════ -->
+<div class="sub-nav" id="subNav">
+  <a class="active" onclick="scrollTo('hero')">Overview</a>
+  <a onclick="scrollTo('capabilities')">Capabilities</a>
+  <a onclick="scrollTo('how')">How it works</a>
+  <a onclick="scrollTo('ai-native')">AI-native</a>
+  <a onclick="scrollTo('security')">Security</a>
+  <a onclick="scrollTo('integrations')">Integrations</a>
+</div>
+
+<!-- ══ HERO ════════════════════════════════════════════ -->
+<section class="hero grid-bg bg-ink" id="hero">
+  <div class="hero-glow"></div>
+  <div class="glow-left"></div>
+  <div class="container">
+
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+      <a href="#">zuuz.ai</a>
+      <span>›</span>
+      <a href="#">Platform</a>
+      <span>›</span>
+      <span style="color:var(--wht)">Platform Overview</span>
+    </div>
+
+    <div class="badge-pill" style="margin-bottom:20px">
+      <svg class="pulse" width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#A3F3FF"/></svg>
+      <span class="badge-text">Platform · Architecture Overview</span>
+    </div>
+
+    <div style="max-width:800px;margin-bottom:32px">
+      <h1 class="display" style="font-size:64px;color:var(--wht);margin-bottom:24px">
+        One platform. <span style="color:var(--e)">Every department.</span> No silos.
+      </h1>
+      <p class="body-t" style="font-size:20px;color:var(--soft);max-width:680px;line-height:1.6">
+        ZUUZ is the AI Operating System for the enterprise — an intelligence layer that sits above your existing stack, runs agents across every workflow, and connects every department into one decision surface.
+      </p>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px">
+      <button class="btn-primary">Book a demo →</button>
+      <button class="btn-ghost">Explore the agent library ↗</button>
+    </div>
+
+    <!-- THREE LAYER POSITIONING TABS -->
+    <div style="background:var(--panel);border:1px solid var(--bdr);border-radius:16px;padding:0 32px 32px">
+      <div style="padding-top:32px;margin-bottom:0">
+        <div class="kicker" style="margin-bottom:8px">Three ways to understand ZUUZ</div>
+        <p style="font-size:13px;font-weight:500;color:var(--muted)">The same platform — explained at three depths. Use the one that fits your conversation.</p>
+      </div>
+      <div class="layer-tabs" style="margin-top:24px">
+        <div class="layer-tab active" onclick="switchLayer(0)">What it is</div>
+        <div class="layer-tab" onclick="switchLayer(1)">How it's built</div>
+        <div class="layer-tab" onclick="switchLayer(2)">Why it's different</div>
+      </div>
+
+      <!-- Layer 0: Product label -->
+      <div class="layer-content active" id="layer-0">
+        <div>
+          <div class="kicker" style="margin-bottom:10px">Layer 1 — The product label</div>
+          <h2 class="semi" style="font-size:38px;color:var(--wht);margin-bottom:16px">Agentic AI Work Platform</h2>
+          <p class="body-t" style="font-size:15px;margin-bottom:20px">
+            Three words, three answers. <strong style="color:var(--wht)">Agentic</strong> — it acts, not just answers. <strong style="color:var(--wht)">Work</strong> — it does work, not just analysis. <strong style="color:var(--wht)">Platform</strong> — one system, every department.
+          </p>
+          <p class="body-t" style="font-size:14px">Use this in every introduction, every headline, every first conversation. It's the category claim.</p>
+        </div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:12px;padding:28px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">One sentence</div>
+          <p style="font-size:17px;font-weight:700;color:var(--wht);line-height:1.55;font-style:italic">
+            "ZUUZ is the Agentic AI Work Platform that runs enterprise workflows across every department — connecting to the systems you already have, without replacing any of them."
+          </p>
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--bdr)">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">25 words</div>
+            <p style="font-size:14px;font-weight:600;color:var(--sky)">AI agents that do the work. One platform. Every department. Connects to your ERP, CRM, and collaboration tools in weeks.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layer 1: Architecture -->
+      <div class="layer-content" id="layer-1">
+        <div>
+          <div class="kicker" style="margin-bottom:10px">Layer 2 — The architecture claim</div>
+          <h2 class="semi" style="font-size:36px;color:var(--wht);margin-bottom:16px">The AI Operating System for the enterprise.</h2>
+          <p class="body-t" style="font-size:15px;margin-bottom:16px">The OS analogy is precise, not metaphorical. An OS doesn't replace your applications — it orchestrates them. ZUUZ doesn't replace SAP or Salesforce. It's the intelligence layer above all of them.</p>
+          <p class="body-t" style="font-size:14px;margin-bottom:20px">This is what an AI OS does that standalone AI tools can't: <strong style="color:var(--wht)">shared context, shared memory, and shared orchestration</strong> across every agent, every system, and every workflow.</p>
+          <div style="padding:14px 18px;background:rgba(0,24,255,.1);border-left:3px solid var(--e);border-radius:6px;font-size:14px;font-weight:700;color:var(--wht);font-style:italic">
+            "Your SAP has data. Your Salesforce has data. Your Teams has data. None of them share context. ZUUZ is the layer that reads all of it, acts on all of it, and lets agents communicate with each other across all of it."
+          </div>
+        </div>
+        <div class="context-pack">
+          <div class="cp-glow"></div>
+          <div class="cp-label">AI OS — shared context layer</div>
+          <div class="cp-sources">
+            <div class="cp-source">SAP ERP<span>45,892 records</span></div>
+            <div class="cp-source">Salesforce<span>15,247 contacts</span></div>
+            <div class="cp-source">Teams<span>8,934 threads</span></div>
+            <div class="cp-source">BambooHR<span>Live balances</span></div>
+            <div class="cp-source">Zendesk<span>Open tickets</span></div>
+            <div class="cp-source">SharePoint<span>10,000+ docs</span></div>
+          </div>
+          <div class="cp-center">
+            <div class="cp-center-label">ZUUZ — AI OPERATING SYSTEM</div>
+            <div class="cp-center-sub">Shared context · Shared memory · Shared orchestration</div>
+          </div>
+          <div class="cp-output">AI verdict assembled · Full audit trail · Decision ready</div>
+        </div>
+      </div>
+
+      <!-- Layer 2: Paradigm -->
+      <div class="layer-content" id="layer-2">
+        <div>
+          <div class="kicker" style="margin-bottom:10px">Layer 3 — The paradigm claim</div>
+          <h2 class="semi" style="font-size:36px;color:var(--wht);margin-bottom:16px">Work, reimagined from the bottom up with AI.</h2>
+          <p class="body-t" style="font-size:15px;margin-bottom:16px">There are two ways to apply AI to enterprise work. The first: take existing workflows and add AI. You get faster versions of broken processes.</p>
+          <p class="body-t" style="font-size:14px;margin-bottom:20px">The second: start from the outcome, and build a workflow where AI does the work by default. The manager reviews a <strong style="color:var(--wht)">recommendation</strong>, not a process. That's not improvement. That's redesign.</p>
+          <div style="padding:14px 18px;background:rgba(0,24,255,.1);border-left:3px solid var(--e);border-radius:6px;font-size:14px;font-weight:700;color:var(--wht);font-style:italic">
+            "AI-native means every workflow was designed for a world where AI is the primary actor, not the assistant."
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr;gap:8px">
+          <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:10px;padding:20px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#FF6666;margin-bottom:10px">❌ &nbsp;AI added on top</div>
+            <div style="font-size:13px;font-weight:500;color:var(--soft)">Manager opens leave request → opens 4 systems → checks workload manually → decides.</div>
+          </div>
+          <div style="background:rgba(0,24,255,.08);border:1px solid var(--e);border-radius:10px;padding:20px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sky);margin-bottom:10px">✓ &nbsp;AI-native from the foundation</div>
+            <div style="font-size:13px;font-weight:500;color:var(--wht)">Manager opens request → ZUUZ has already pulled 7 systems, scored risk, flagged the delegate. Manager reviews a recommendation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAPABILITIES ══════════════════════════════════ -->
+<section class="section bg-black" id="capabilities">
+  <div class="container">
+    <div style="margin-bottom:48px">
+      <div class="kicker">Platform Capabilities</div>
+      <h2 class="semi" style="font-size:48px;color:var(--wht);max-width:600px">
+        Six capabilities. <span style="color:var(--e)">Every one quantified.</span>
+      </h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:8px" id="capWrap">
+      <div class="cap-nav" id="capNav">
+        <div class="cap-nav-item active" onclick="switchCap(0)">
+          <span class="cap-nav-icon">⚡</span>
+          <span class="cap-nav-label">AI Agents</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+        <div class="cap-nav-item" onclick="switchCap(1)">
+          <span class="cap-nav-icon">⑂</span>
+          <span class="cap-nav-label">Workflow Automation</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+        <div class="cap-nav-item" onclick="switchCap(2)">
+          <span class="cap-nav-icon">🔍</span>
+          <span class="cap-nav-label">Unified Search</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+        <div class="cap-nav-item" onclick="switchCap(3)">
+          <span class="cap-nav-icon">◈</span>
+          <span class="cap-nav-label">Decision Intelligence</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+        <div class="cap-nav-item" onclick="switchCap(4)">
+          <span class="cap-nav-icon">⬡</span>
+          <span class="cap-nav-label">Agent-to-Agent (A2A)</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+        <div class="cap-nav-item" onclick="switchCap(5)">
+          <span class="cap-nav-icon">🛡</span>
+          <span class="cap-nav-label">Security & Governance</span>
+          <span class="cap-nav-arrow">→</span>
+        </div>
+      </div>
+      <div class="cap-panel" id="capPanel"><!-- filled by JS --></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══════════════════════════════════ -->
+<section class="section bg-ink" id="how">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="kicker">How it works</div>
+      <h2 class="semi" style="font-size:48px;color:var(--wht);margin-bottom:14px">
+        From your stack to <span style="color:var(--e)">AI-powered decisions</span> in four steps.
+      </h2>
+      <p class="body-t" style="font-size:16px;max-width:560px;margin:0 auto">No migration. No rip-and-replace. ZUUZ sits above what you have and makes it intelligent.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;align-items:center">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-icon">🔌</div>
+        <div class="flow-title">Connect your stack</div>
+        <div class="flow-body">Native API connections to SAP, Salesforce, Teams, BambooHR, Zendesk and 40+ more. Your IT team builds nothing. Live in days.</div>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-icon">🤖</div>
+        <div class="flow-title">Deploy agents</div>
+        <div class="flow-body">Choose from the agent library. Pre-built for Legal, HR, Procurement, IT, Sales, Marketing. No configuration required to start.</div>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-icon">⚙️</div>
+        <div class="flow-title">Automate workflows</div>
+        <div class="flow-body">Drag-and-drop Workflow Builder connects triggers, logic, and outputs across every integrated system. No code. Build once, every system runs it.</div>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-icon">🎯</div>
+        <div class="flow-title">Decisions in minutes</div>
+        <div class="flow-body">Cross-system context assembled automatically. AI verdict with evidence. Managers and executives review recommendations — not data stacks.</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div style="margin-top:32px;background:var(--panel);border:1px solid var(--bdr);border-radius:14px;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Typical deployment timeline</div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap">
+        <div style="text-align:center"><div style="font-size:18px;font-weight:900;color:var(--e);font-style:italic">Days 1–5</div><div style="font-size:11px;font-weight:500;color:var(--soft)">Core integrations live</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:900;color:var(--e);font-style:italic">Week 2</div><div style="font-size:11px;font-weight:500;color:var(--soft)">First agents running</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:900;color:var(--e);font-style:italic">Week 3–4</div><div style="font-size:11px;font-weight:500;color:var(--soft)">First department live</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:900;color:var(--e);font-style:italic">Quarter 1</div><div style="font-size:11px;font-weight:500;color:var(--soft)">ROI measurable</div></div>
+      </div>
+      <button class="btn-primary" style="font-size:13px;padding:11px 22px">Book a scoping call →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT ZUUZ IS NOT ══════════════════════════════ -->
+<section class="section bg-white" id="ai-native">
+  <div class="container">
+    <div class="grid-2" style="gap:64px;align-items:start">
+      <div>
+        <div class="kicker blue">What ZUUZ is not</div>
+        <h2 class="semi" style="font-size:46px;color:var(--blk);margin-bottom:20px">
+          The category matters. <span style="color:var(--e)">Here's what we're not.</span>
+        </h2>
+        <p style="font-size:16px;font-weight:400;color:#444;line-height:1.65;margin-bottom:28px">
+          Enterprise buyers get pitched a lot of "AI platforms." The framing matters because it defines what's possible. ZUUZ is a structurally different category from everything below.
+        </p>
+        <div style="background:#F0F0FF;border:1px solid rgba(0,24,255,.15);border-radius:10px;padding:20px 24px">
+          <div style="font-size:13px;font-weight:800;color:var(--blk);margin-bottom:8px">The one-line test</div>
+          <p style="font-size:14px;font-weight:400;color:#444;line-height:1.6">
+            If the AI helps you do a task faster, it's a copilot.<br/>
+            If the AI <strong>does the task</strong> and you review the output, it's ZUUZ.
+          </p>
+        </div>
+      </div>
+      <div>
+        <table class="not-table">
+          <thead>
+            <tr>
+              <th>They call it</th>
+              <th>Why that's wrong</th>
+              <th>What to say instead</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="not-col-they"><span class="cross">✗</span> A chatbot</td>
+              <td class="not-col-why">Chatbots answer questions. ZUUZ takes action.</td>
+              <td class="not-col-say">"Our agents don't just reply — they execute."</td>
+            </tr>
+            <tr>
+              <td class="not-col-they"><span class="cross">✗</span> A copilot</td>
+              <td class="not-col-why">Copilots assist. ZUUZ automates.</td>
+              <td class="not-col-say">"Copilots help you work faster. ZUUZ changes what work you have to do."</td>
+            </tr>
+            <tr>
+              <td class="not-col-they"><span class="cross">✗</span> An ERP add-on</td>
+              <td class="not-col-why">ZUUZ is the AI OS layer above ERP, not inside it.</td>
+              <td class="not-col-say">"We sit above SAP, not inside it. We're the OS, not a module."</td>
+            </tr>
+            <tr>
+              <td class="not-col-they"><span class="cross">✗</span> A workflow tool</td>
+              <td class="not-col-why">Workflow tools automate steps humans designed. ZUUZ redesigns the workflow.</td>
+              <td class="not-col-say">"We don't automate your existing process. We replace it with an AI-native one."</td>
+            </tr>
+            <tr>
+              <td class="not-col-they"><span class="cross">✗</span> A replacement</td>
+              <td class="not-col-why">Nothing gets replaced.</td>
+              <td class="not-col-say">"Your stack stays. ZUUZ is the AI OS on top of it."</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AI-native comparison -->
+    <div style="margin-top:48px">
+      <div style="text-align:center;margin-bottom:24px">
+        <div class="kicker blue">AI-native vs AI-added</div>
+        <h3 class="semi" style="font-size:36px;color:var(--blk)">The same outcome. A structurally <span style="color:var(--e)">different path.</span></h3>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card bad">
+          <div class="compare-label bad-label">AI added on top of existing workflow</div>
+          <div class="compare-title" style="color:#333">Contract review — traditional</div>
+          <div class="compare-items">
+            <div class="compare-item bad-item">📧 Contract lands in lawyer's inbox</div>
+            <div class="compare-item bad-item">👁 Lawyer reads full document — 6 hrs</div>
+            <div class="compare-item bad-item">📝 Manual clause identification</div>
+            <div class="compare-item bad-item">📊 Risk assessment from experience</div>
+            <div class="compare-item bad-item">📋 Manual summary written</div>
+            <div class="compare-item bad-item" style="color:#FF6666;font-weight:600">Total: 6 hours per contract</div>
+          </div>
+        </div>
+        <div class="compare-card good">
+          <div class="compare-label good-label">AI-native workflow — ZUUZ</div>
+          <div class="compare-title" style="color:var(--wht)">Contract review — ZUUZ agent</div>
+          <div class="compare-items">
+            <div class="compare-item good-item">📨 Contract received → agent triggered automatically</div>
+            <div class="compare-item good-item">🤖 Agent reads full document — 3 min</div>
+            <div class="compare-item good-item">⚠️ Risk clauses flagged with location + severity</div>
+            <div class="compare-item good-item">📊 Risk score: Low / Medium / High with evidence</div>
+            <div class="compare-item good-item">✅ Lawyer reviews output — 27 min</div>
+            <div class="compare-item good-item" style="color:var(--sky);font-weight:700">Total: 30 min · 5.5 hrs saved per contract</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECURITY ════════════════════════════════════════ -->
+<section class="section bg-ink" id="security">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="kicker">Security & Governance</div>
+      <h2 class="semi" style="font-size:46px;color:var(--wht)">
+        Built for enterprise <span style="color:var(--e)">trust.</span>
+      </h2>
+      <p class="body-t" style="font-size:16px;max-width:540px;margin:16px auto 0">
+        Every AI action is logged. Every access is controlled. Every decision is traceable. Always.
+      </p>
+    </div>
+    <div class="security-grid">
+      <div class="security-card">
+        <div class="security-icon">🔐</div>
+        <div class="security-title">SOC 2 Type I Attested</div>
+        <div class="security-body">Independent verification of security controls. Formal audit process. Enterprise security baseline met.</div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">👥</div>
+        <div class="security-title">Role-Based Access Control</div>
+        <div class="security-body">11 distinct personas. The sidebar, KPIs, and workflows all change by role — not just permissions on tabs.</div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">📋</div>
+        <div class="security-title">Tamper-Evident Audit Trail</div>
+        <div class="security-body">Every AI action, every decision, every data point available at time of decision — permanently logged and immutable.</div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">🔒</div>
+        <div class="security-title">Legal Hold — System-Enforced</div>
+        <div class="security-body">Legal Hold is a system control, not a procedure. Downloads disabled, locked, non-negotiable. No human error possible.</div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">🌐</div>
+        <div class="security-title">API-Only Integration</div>
+        <div class="security-body">ZUUZ connects via standard API. Your data is never duplicated into a separate database. Disconnect ZUUZ — your SAP and Salesforce are untouched.</div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">🚫</div>
+        <div class="security-title">Your Data Stays Yours</div>
+        <div class="security-body">Your data is never used to train any underlying model. What happens in your enterprise stays in your enterprise.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INTEGRATIONS STRIP ════════════════════════════ -->
+<section style="background:var(--panel);padding:64px 0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)" id="integrations">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:36px">
+      <div class="kicker">Universal Connectivity</div>
+      <h2 class="semi" style="font-size:42px;color:var(--wht)">45+ integrations. <span style="color:var(--e)">Zero custom build.</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:16px">
+      <div style="grid-column:span 6;display:grid;grid-template-columns:repeat(6,1fr);gap:4px">
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">SAP</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">Oracle</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">Dynamics 365</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">NetSuite</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">Salesforce</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--wht)">HubSpot</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Google Workspace</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Microsoft Teams</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">SharePoint</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">BambooHR</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Workday</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Zendesk</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Amazon</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Walmart</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Shopify</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">WhatsApp</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--soft)">Zoho CRM</div>
+        <div style="background:var(--ink);border:1px solid var(--bdr);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:700;color:var(--muted)">+ 27 more</div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <a style="font-size:13px;font-weight:700;color:var(--sky);display:inline-flex;align-items:center;gap:6px">View all integrations →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════ -->
+<section class="cta-section">
+  <svg style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;opacity:.1" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="white"/></svg>
+  <div class="container" style="position:relative">
+    <div class="kicker">Ready to go deeper?</div>
+    <h2 class="display" style="font-size:54px;color:var(--wht);margin-bottom:20px;max-width:640px;margin-left:auto;margin-right:auto">
+      See the platform running on your <span style="color:var(--blk)">actual stack.</span>
+    </h2>
+    <p style="font-size:17px;font-weight:400;color:rgba(255,255,255,.82);max-width:520px;margin:0 auto 40px;line-height:1.6">
+      30 minutes. Bring your tech stack and one workflow that's broken. We'll show you the agent, the time saved, and the integration live.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button style="padding:16px 32px;background:var(--wht);color:var(--e);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px">
+        Book a demo →
+      </button>
+      <button style="padding:16px 28px;background:var(--blk);color:var(--wht);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;cursor:pointer">
+        Download platform brief ↓
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:24px;font-weight:900;font-style:italic;letter-spacing:-.04em;color:var(--wht)">ZUUZ</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:400;color:var(--muted);margin-top:16px;max-width:260px;line-height:1.7">The Agentic AI Work Platform for the enterprise. One AI Operating System. Every department. Connected.</div>
+        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-top:12px;letter-spacing:.14em;text-transform:uppercase">Powered by Cloud Box AI</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <a class="footer-link" style="color:var(--sky)">Platform Overview</a>
+        <a class="footer-link">AI Agents</a><a class="footer-link">Workflow Automation</a>
+        <a class="footer-link">Unified Search</a><a class="footer-link">Decision Intelligence</a>
+        <a class="footer-link">A2A</a><a class="footer-link">Pricing</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Solutions</div>
+        <a class="footer-link">By Industry</a><a class="footer-link">By Role</a>
+        <a class="footer-link">By Use Case</a><a class="footer-link">ROI Calculator</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <a class="footer-link">About</a><a class="footer-link">Leadership</a>
+        <a class="footer-link">Careers</a><a class="footer-link">Contact</a><a class="footer-link">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2026 ZUUZ. All rights reserved.</span>
+      <span class="footer-legal">zuuz.ai · Legacy Town Center, Plano TX 75024</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>30);
+},{passive:true});
+
+// ── SUB-NAV SCROLL HIGHLIGHT ────────────────────────
+const sections=['hero','capabilities','how','ai-native','security','integrations'];
+const subLinks=document.querySelectorAll('.sub-nav a');
+window.addEventListener('scroll',()=>{
+  let current='hero';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-120) current=id;
+  });
+  subLinks.forEach((l,i)=>l.classList.toggle('active',sections[i]===current));
+},{passive:true});
+
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+// ── THREE LAYER TABS ────────────────────────────────
+function switchLayer(idx){
+  document.querySelectorAll('.layer-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.layer-content').forEach((c,i)=>c.classList.toggle('active',i===idx));
+}
+
+// ── CAPABILITY PANELS ───────────────────────────────
+const caps=[
+  {
+    kicker:"Capability 01",
+    title:"AI Agents",
+    headline:"An AI agent isn't a chatbot you ask questions. It's a worker that handles a defined task end-to-end — reading the contract, scoring the risk, generating the PO, transcribing the meeting.",
+    body:"You don't manage the agent. You review what it did. 19 pre-built agents across productivity, HR, legal, procurement, IT, marketing, and operations — each one quantified, each one running on live connected data.",
+    proof:[
+      ["Contract Risk Review Agent","6 hrs saved per contract — reads, flags risk clauses, scores overall risk"],
+      ["Eagle-Eye Leave Review","7 systems pulled simultaneously at point of approval — no manual lookup"],
+      ["Procurement Supplier AI","4 hrs saved per PO — compares vendors, generates LPO, routes for approval"],
+      ["Email Summary Agent","45 min saved per day — reads inbox, drafts replies, extracts action items"],
+      ["Meeting Intelligence","20 min saved per meeting — transcribes, structures action items with owners"],
+      ["CEO Approval Cockpit","5 days → same-day — financial exposure, AR, sentiment assembled in real time"],
+    ],
+    tag:"The agent does the task. You review the output."
+  },
+  {
+    kicker:"Capability 02",
+    title:"Workflow Automation",
+    headline:"Every repetitive process that crosses more than one system should be automated. Workflow Builder lets you build that automation without writing code.",
+    body:"Drag a trigger, connect it to a data source, add logic, define the output. Done. The difference from legacy workflow tools: ZUUZ Workflow Builder sits on top of pre-built integrations — HR, ERP, CRM, collaboration tools are already connected. You're building the logic, not the plumbing.",
+    proof:[
+      ["No-code builder","Drag-and-drop interface — triggers, logic, actions, outputs"],
+      ["Full logic support","IF/ELSE, SWITCH, WAIT, LOOP, TRY/CATCH — complete conditional logic"],
+      ["45+ integrations pre-wired","No custom API work to add a new data source"],
+      ["Pre-built templates","Employee Onboarding, Campaign ROI Check, Leave Approval and more"],
+      ["Role-based permissions","Control which workflows each persona can trigger or modify"],
+    ],
+    tag:"Build it once. Every connected system runs it."
+  },
+  {
+    kicker:"Capability 03",
+    title:"Unified Search",
+    headline:"Your institutional knowledge is in ten different places. Unified Search finds it across all of them in one query — and only shows each person what they're allowed to see.",
+    body:"The average knowledge worker spends 1.8 hours per day searching for information across fragmented systems. That's 450 hours per year per employee — looking for things that already exist somewhere. Unified Search collapses that into a single interface, access-controlled by role.",
+    proof:[
+      ["10,000+ documents","Searches simultaneously across SharePoint, OneDrive, email, internal servers"],
+      ["Dual-mode search","Internal org documents + external real-time web from the same interface"],
+      ["Access-controlled","Results respect DMS permissions automatically — IT doesn't manage separately"],
+      ["Voice-enabled","Speak the query — ZUUZ AI + Google Gemini + real-time search"],
+      ["Workflow trigger","Search 'apply for leave' → launches the leave request directly"],
+    ],
+    tag:"One query. Every system. Only what you're allowed to see."
+  },
+  {
+    kicker:"Capability 04",
+    title:"Decision Intelligence",
+    headline:"Decisions get made with incomplete information because the complete information is in six different systems and nobody has time to pull it together.",
+    body:"Decision Intelligence assembles every relevant data point before the decision-maker opens the request — and the AI tells you what it recommends, and why. The CEO Approval Cockpit isn't a productivity feature. It's a decision quality feature.",
+    proof:[
+      ["CEO Approval Cockpit","AR aging, open tickets, delivery delays, 90-day sentiment — assembled in real time"],
+      ["AI verdict","Recommend Approve / Approve with Conditions / Recommend Reject — with named evidence"],
+      ["Eagle-Eye Review","7 systems pulled simultaneously at point of leave approval — workload, risk, delegate"],
+      ["Risk scoring","Low / Medium / High with transparent evidence — every factor shown, not black-boxed"],
+      ["Audit log","Every decision, every data point available at decision time — permanently recorded"],
+    ],
+    tag:"The AI tells you what to decide. You decide whether to agree."
+  },
+  {
+    kicker:"Capability 05",
+    title:"Agent-to-Agent (A2A)",
+    headline:"Most automation requires a human to start it. A2A doesn't. Agents monitor your connected systems continuously and resolve incidents without a human triggering any step.",
+    body:"When an anomaly is detected — an IT incident, a threshold breach, a compliance flag — the detecting agent communicates directly with the resolution agent, which takes action, logs it, and only escalates if a human is genuinely needed. This is the difference between automation that runs when you press a button and a system that knows when to press its own buttons.",
+    proof:[
+      ["Incident Inbox","AI classifies incidents by severity (Critical/High/Medium/Low) without human triage"],
+      ["Resolution Workspace","Step-by-step agent execution with inter-agent communication logged in real time"],
+      ["System Verification","Continuous health checks across all connected integrations — breaks flagged early"],
+      ["A2A Logs","Full audit trail of every agent decision, action, and outcome — complete accountability"],
+      ["Zero-touch resolution","Defined incident types resolved without human intervention — escalates when needed"],
+    ],
+    tag:"Agents that work while no one's watching."
+  },
+  {
+    kicker:"Foundation",
+    title:"Security & Governance",
+    headline:"ZUUZ is SOC 2 Type I attested. Role-based access across 11 personas. Tamper-evident audit trail. Legal Hold enforced at the system level.",
+    body:"Every AI action is logged. Every access is controlled. Every decision is traceable. The audit trail isn't a report you run — it's a permanent, immutable record of what happened, when, with what data, and who decided what. Built for regulated industries from day one.",
+    proof:[
+      ["SOC 2 Type I","Independent verification of security controls — enterprise baseline met"],
+      ["RBAC across 11 roles","Sidebar, KPIs, workflows all change by role — not just tab permissions"],
+      ["Tamper-evident logs","Every AI action permanently recorded — cannot be modified or deleted"],
+      ["System-enforced Legal Hold","Downloads disabled at system level — not a procedure, a control"],
+      ["API-only integration","Your data never duplicated. Disconnect ZUUZ — your stack is untouched."],
+      ["Data never used for training","Your enterprise data stays yours. No model training on customer data."],
+    ],
+    tag:"Every action logged. Every decision traceable. Always."
+  }
+];
+
+function switchCap(idx){
+  document.querySelectorAll('.cap-nav-item').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  const c=caps[idx];
+  document.getElementById('capPanel').innerHTML=`
+    <div class="cap-panel-kicker">${c.kicker}</div>
+    <div class="cap-panel-title">${c.title}</div>
+    <div class="cap-panel-headline">${c.headline}</div>
+    <div class="cap-panel-body">${c.body}</div>
+    <div class="proof-list">
+      ${c.proof.map(p=>`
+        <div class="proof-item">
+          <span class="proof-check">✓</span>
+          <span><span class="proof-highlight">${p[0]}</span> — ${p[1]}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="use-case-tag">${c.tag}</div>
+  `;
+}
+switchCap(0);
+</script>
+</body>
+</html>
