@@ -1,16 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "**/*.html", "use": "@vercel/static" }
-  ],
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" }
+      ]
+    }
+  ],
   "rewrites": [
-    { "source": "/platform", "destination": "/platform/index.html" },
+    { "source": "/platform", "destination": "/zuuz-platform-overview-v2.html" },
     { "source": "/pricing", "destination": "/pricing/index.html" },
-    { "source": "/zuuz-homepage-v3", "destination": "/index.html" },
-    { "source": "/zuuz-platform-overview-v3", "destination": "/zuuz-platform-overview-v2.html" },
-    { "source": "/zuuz-ai-agents", "destination": "/zuuz-agent-library.html" },
-    { "source": "/zuuz-pricing", "destination": "/pricing/index.html" }
+    { "source": "/solutions", "destination": "/zuuz-solutions-industry.html" },
+    { "source": "/about", "destination": "/zuuz-company.html" }
   ]
 }
