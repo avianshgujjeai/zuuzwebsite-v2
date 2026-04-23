@@ -1,0 +1,34 @@
+name: Restore index.html from good commit
+
+on:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore index.html from good commit
+        run: |
+          git checkout 62a502b6eab22416d1239dc2697c9d163f0e569e -- index.html
+          echo "Restored index.html:"
+          wc -c index.html
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix: Restore real index.html from commit 62a502b6"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/avianshgujjeai/zuuzwebsite-v2.git HEAD:main
