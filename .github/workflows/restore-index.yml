@@ -1,4 +1,4 @@
-name: Restore index.html from good commit
+name: Fix all broken nav links in HTML files
 
 on:
   workflow_dispatch:
@@ -10,25 +10,60 @@ permissions:
   contents: write
 
 jobs:
-  restore:
+  fix:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo with full history
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Restore index.html from good commit
+      - name: Fix broken links and inject nav-fix.js in ALL HTML files
         run: |
-          git checkout 62a502b6eab22416d1239dc2697c9d163f0e569e -- index.html
-          echo "Restored index.html:"
-          wc -c index.html
+          MARKER='nav-fix.js'
+          SCRIPT_ROOT='<script src="/nav-fix.js"></script>'
+          SCRIPT_SUB='<script src="../nav-fix.js"></script>'
+
+          fix_root_file() {
+            local f=$1
+            sed -i 's|zuuz-platform-overview-v3\.html|zuuz-platform-overview-v2.html|g' "$f"
+            sed -i 's|zuuz-homepage-v3\.html|index.html|g' "$f"
+            sed -i 's|zuuz-ai-agents\.html|zuuz-agent-library.html|g' "$f"
+            sed -i 's|zuuz-pricing\.html|pricing/index.html|g' "$f"
+            if ! grep -q "$MARKER" "$f"; then
+              sed -i "s|</body>|${SCRIPT_ROOT}\n</body>|I" "$f"
+            fi
+            echo "FIXED: $f"
+          }
+
+          fix_sub_file() {
+            local f=$1
+            sed -i 's|zuuz-platform-overview-v3\.html|../zuuz-platform-overview-v2.html|g' "$f"
+            sed -i 's|zuuz-homepage-v3\.html|../index.html|g' "$f"
+            sed -i 's|zuuz-ai-agents\.html|../zuuz-agent-library.html|g' "$f"
+            sed -i 's|zuuz-pricing\.html|../pricing/index.html|g' "$f"
+            if ! grep -q "$MARKER" "$f"; then
+              sed -i "s|</body>|${SCRIPT_SUB}\n</body>|I" "$f"
+            fi
+            echo "FIXED: $f"
+          }
+
+          for f in *.html; do
+            [ -f "$f" ] && fix_root_file "$f"
+          done
+
+          [ -f platform/index.html ] && fix_sub_file platform/index.html
+          [ -f pricing/index.html ] && fix_sub_file pricing/index.html
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "Fix: Restore real index.html from commit 62a502b6"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/avianshgujjeai/zuuzwebsite-v2.git HEAD:main
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "Fix: Repair all broken nav links and inject nav-fix.js sitewide"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/avianshgujjeai/zuuzwebsite-v2.git HEAD:main
+          fi
