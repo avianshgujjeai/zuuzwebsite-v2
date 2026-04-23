@@ -1,0 +1,64 @@
+name: Inject nav-fix.js into all HTML pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Inject nav-fix.js into root HTML files
+        run: |
+          MARKER='nav-fix.js'
+          SCRIPT_ROOT='<script src="/nav-fix.js"></script>'
+          SCRIPT_SUB='<script src="../nav-fix.js"></script>'
+
+          # Root HTML files
+          for f in *.html; do
+            if [ -f "$f" ]; then
+              if grep -q "$MARKER" "$f"; then
+                echo "SKIP (already injected): $f"
+              else
+                # Insert before </body>
+                sed -i "s|</body>|${SCRIPT_ROOT}\n</body>|I" "$f"
+                echo "INJECTED: $f"
+              fi
+            fi
+          done
+
+          # platform/index.html
+          if [ -f "platform/index.html" ]; then
+            if grep -q "$MARKER" "platform/index.html"; then
+              echo "SKIP (already injected): platform/index.html"
+            else
+              sed -i "s|</body>|${SCRIPT_SUB}\n</body>|I" "platform/index.html"
+              echo "INJECTED: platform/index.html"
+            fi
+          fi
+
+          # pricing/index.html
+          if [ -f "pricing/index.html" ]; then
+            if grep -q "$MARKER" "pricing/index.html"; then
+              echo "SKIP (already injected): pricing/index.html"
+            else
+              sed -i "s|</body>|${SCRIPT_SUB}\n</body>|I" "pricing/index.html"
+              echo "INJECTED: pricing/index.html"
+            fi
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Fix: Inject nav-fix.js into all HTML pages sitewide"
+            git push
+          fi
