@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/platform", "destination": "/platform/index.html" },
+    { "source": "/pricing", "destination": "/pricing/index.html" },
+    { "source": "/zuuz-homepage-v3", "destination": "/index.html" },
+    { "source": "/zuuz-platform-overview-v3", "destination": "/zuuz-platform-overview-v2.html" },
+    { "source": "/zuuz-ai-agents", "destination": "/zuuz-agent-library.html" },
+    { "source": "/zuuz-pricing", "destination": "/pricing/index.html" }
+  ]
+}
