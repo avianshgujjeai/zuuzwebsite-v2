@@ -18,6 +18,8 @@
   s.textContent =
     /* disable CSS hover-open on new pages */
     '.nav-item:hover .dd{display:none!important}' +
+        /* disable CSS hover-open on old pages */
+    '.nav-item:hover .dropdown{display:none!important}' +
     /* open class drives visibility */
     '.nav-item.open .dd{display:block!important;pointer-events:all!important}' +
     '.nav-item.open .dropdown{display:block!important;pointer-events:all!important}' +
