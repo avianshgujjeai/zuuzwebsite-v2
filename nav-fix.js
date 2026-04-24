@@ -2,32 +2,63 @@
   'use strict';
 
   /* ======================================================
-     ZUUZ nav-fix.js v2 — universal nav patch
+     ZUUZ nav-fix.js v3 — universal nav patch
      Handles BOTH nav types:
        A) Old pages: .nav-item + .dropdown  (index.html)
        B) New pages: .nav-item + .dd  (new AI-generated)
      Fixes:
        1. Remove arrow text from nav triggers
-       2. Click-toggle dropdowns (click open, click again to close)
-       3. Close on outside mousedown (fires before click, no re-open)
+       2. Click-toggle dropdowns (click to open, click again to close)
+       3. Close on outside mousedown
        4. Mobile hamburger menu
+       5. Wire navigation to dropdown items that have no href
   ====================================================== */
+
+  /* -- 0. Text-to-URL map for dropdown items that lack href -- */
+  var NAV_MAP = {
+    'platform overview': '/zuuz-platform-overview-v2.html',
+    'overview': '/zuuz-platform-overview-v2.html',
+    'ai agents': '/zuuz-ai-agents.html',
+    'workflow automation': '/zuuz-workflow-automation.html',
+    'unified search': '/zuuz-unified-search.html',
+    'decision intelligence': '/zuuz-decision-intelligence.html',
+    'agent-to-agent (a2a)': '/zuuz-a2a.html',
+    'a2a': '/zuuz-a2a.html',
+    'universal connectivity': '/zuuz-universal-connectivity.html',
+    'security & governance': '/zuuz-security.html',
+    'security': '/zuuz-security.html',
+    'pricing': '/pricing/index.html',
+    'by industry': '/zuuz-solutions-industry.html',
+    'by role': '/zuuz-solutions-role.html',
+    'by use case': '/zuuz-solutions-usecase.html',
+    'roi calculator': '/zuuz-roi-calculator.html',
+    'how zuuz works': '/zuuz-how-zuuz-works.html',
+    'case studies': '/zuuz-case-studies.html',
+    'about': '/zuuz-company.html',
+    'company': '/zuuz-company.html',
+    'blog': '/zuuz-blogs.html',
+    'docs': '/zuuz-documentation.html',
+    'documentation': '/zuuz-documentation.html',
+    'contact': '/zuuz-contact.html',
+    'sign in': '/zuuz-signin.html',
+    'book a demo': '/zuuz-book-demo.html'
+  };
 
   /* -- CSS injection -- */
   var s = document.createElement('style');
   s.textContent =
     /* disable CSS hover-open on new pages */
     '.nav-item:hover .dd{display:none!important}' +
-        /* disable CSS hover-open on old pages */
+    /* disable CSS hover-open on old pages */
     '.nav-item:hover .dropdown{display:none!important}' +
     /* open class drives visibility */
     '.nav-item.open .dd{display:block!important;pointer-events:all!important}' +
     '.nav-item.open .dropdown{display:block!important;pointer-events:all!important}' +
     /* closed dropdowns non-interactive */
     '.dd{pointer-events:none}' +
-    /* dropdown button styles */
-    '.dd button.dd-btn,.dropdown button.dd-btn{display:block;width:100%;text-align:left;padding:9px 14px;border-radius:6px;font-size:13px;font-weight:500;color:#888899;background:none;border:none;cursor:pointer;font-family:inherit;transition:background .15s}' +
-    '.dd button.dd-btn:hover,.dropdown button.dd-btn:hover{background:rgba(255,255,255,.06);color:#fff}' +
+    /* dropdown item pointer cursor if nav-mapped */
+    '.dropdown .dd-mapped,.dd .dd-mapped{cursor:pointer!important;color:#ccc;padding:9px 14px;display:block;width:100%;text-align:left;font-size:13px;font-weight:500;border-radius:6px;transition:background .15s;box-sizing:border-box}' +
+    '.dropdown .dd-mapped:hover,.dd .dd-mapped:hover{background:rgba(255,255,255,.06);color:#fff}' +
     /* mobile burger */
     '#zuuz-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:300}' +
     '#zuuz-burger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s}' +
@@ -49,11 +80,11 @@
   document.querySelectorAll('.nl, .nav-link').forEach(function (el) {
     el.childNodes.forEach(function (node) {
       if (node.nodeType === 3) {
-        node.textContent = node.textContent.replace(/[\u25be\u25bc\u25b4\u25b2\u25be\u25bf\u25c2\u25b8\u276e\u276f\u2039\u203a\u02c2\u02c3\u27e8\u27e9▾▼▴▲]/g, '').replace(/\s+$/, '');
+        node.textContent = node.textContent.replace(/[\u25be\u25bc\u25b4\u25b2\u25bf\u25c2\u25b8]/g, '').replace(/\s+$/, '');
       }
     });
     el.querySelectorAll('span').forEach(function (sp) {
-      if (/^[\u25be\u25bc\u25b4\u25b2▾▼▴▲\s]*$/.test(sp.textContent)) sp.remove();
+      if (/^[\u25be\u25bc\u25b4\u25b2\u25bf\s]*$/.test(sp.textContent)) sp.remove();
     });
   });
 
@@ -66,21 +97,44 @@
     trigger.addEventListener('click', function (ev) {
       ev.stopPropagation();
       var wasOpen = item.classList.contains('open');
-      /* close all */
       document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
-      /* toggle: re-open only if it was closed */
       if (!wasOpen) item.classList.add('open');
     });
   });
 
-  /* -- 3. Close on outside mousedown (fires before click so no re-open) -- */
+  /* -- 3. Close on outside mousedown -- */
   document.addEventListener('mousedown', function (e) {
     if (!e.target.closest('.nav-item')) {
       document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
     }
   });
 
-  /* -- 4. Hamburger -- */
+  /* -- 4. Wire navigation to dropdown items that have no href -- */
+  document.querySelectorAll('.dropdown, .dd').forEach(function (panel) {
+    panel.querySelectorAll('div, span, button').forEach(function (el) {
+      /* skip if already an <a> or has click listener with href */
+      if (el.tagName === 'A') return;
+      var txt = (el.textContent || '').trim().toLowerCase();
+      /* only direct children with meaningful text */
+      if (el.children.length > 0) return;
+      if (!txt) return;
+      var url = NAV_MAP[txt];
+      if (url) {
+        el.classList.add('dd-mapped');
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          window.location.href = url;
+        });
+        el.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') window.location.href = url;
+        });
+      }
+    });
+  });
+
+  /* -- 5. Hamburger -- */
   var navEl = document.getElementById('nav');
   if (navEl && !document.getElementById('zuuz-burger')) {
     var burger = document.createElement('button');
@@ -95,7 +149,7 @@
     });
   }
 
-  /* -- 5. Mobile overlay -- */
+  /* -- 6. Mobile overlay -- */
   if (!document.getElementById('zuuz-mob')) {
     var mob = document.createElement('div');
     mob.id = 'zuuz-mob';
@@ -103,7 +157,7 @@
       '<button id="zuuz-mob-x">&times;</button>' +
       '<div class="zm-links">' +
       '<div class="zm-sec">Platform</div>' +
-      '<a onclick="location.href=\'zuuz-platform-overview.html\'" >Platform Overview</a>' +
+      '<a onclick="location.href=\'zuuz-platform-overview-v2.html\'" >Platform Overview</a>' +
       '<a onclick="location.href=\'zuuz-ai-agents.html\'" >AI Agents</a>' +
       '<a onclick="location.href=\'zuuz-workflow-automation.html\'" >Workflow Automation</a>' +
       '<a onclick="location.href=\'zuuz-unified-search.html\'" >Unified Search</a>' +
@@ -132,7 +186,7 @@
     });
   }
 
-  /* -- 6. Nav scroll shadow -- */
+  /* -- 7. Nav scroll shadow -- */
   window.addEventListener('scroll', function () {
     var n = document.getElementById('nav');
     if (n) n.classList.toggle('scrolled', window.scrollY > 30);
