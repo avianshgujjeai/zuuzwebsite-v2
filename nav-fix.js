@@ -1,195 +1,192 @@
-(function () {
-  'use strict';
+(function(){
+'use strict';
 
-  /* ======================================================
-     ZUUZ nav-fix.js v3 — universal nav patch
-     Handles BOTH nav types:
-       A) Old pages: .nav-item + .dropdown  (index.html)
-       B) New pages: .nav-item + .dd  (new AI-generated)
-     Fixes:
-       1. Remove arrow text from nav triggers
-       2. Click-toggle dropdowns (click to open, click again to close)
-       3. Close on outside mousedown
-       4. Mobile hamburger menu
-       5. Wire navigation to dropdown items that have no href
-  ====================================================== */
+/* ── Full nav map ── */
+var NAV = [
+  { label:'Platform', items:[
+    ['Platform Overview','zuuz-platform-overview-v2.html'],
+    ['AI Agents','zuuz-agent-library.html'],
+    ['Workflow Automation','zuuz-workflow-automation.html'],
+    ['Unified Search','zuuz-unified-search.html'],
+    ['Decision Intelligence','zuuz-decision-intelligence.html'],
+    ['Agent-to-Agent (A2A)','zuuz-a2a.html'],
+    ['Universal Connectivity','zuuz-integrations.html'],
+    ['Security & Governance','zuuz-security-governance.html']
+  ]},
+  { label:'Solutions', items:[
+    ['By Industry','zuuz-solutions-industry.html'],
+    ['By Role','zuuz-solutions-role.html'],
+    ['By Use Case','zuuz-solutions-usecase.html'],
+    ['ROI Calculator','zuuz-roi-calculator.html']
+  ]},
+  { label:'Why ZUUZ', items:[
+    ['How ZUUZ Works','zuuz-how-zuuz-works.html'],
+    ['Case Studies','zuuz-case-studies.html'],
+    ['vs Copilot & ChatGPT','zuuz-vs-chatbots-copilots.html'],
+    ['vs Legacy Tools','zuuz-vs-legacy-workflow-tools.html'],
+    ['vs ERP/CRM','zuuz-vs-erp-crm.html']
+  ]},
+  { label:'Resources', items:[
+    ['Blog','zuuz-blogs.html'],
+    ['Documentation','zuuz-documentation.html'],
+    ['API Reference','zuuz-api-reference.html'],
+    ['Webinars & Events','zuuz-webinars-events.html'],
+    ['Contact','zuuz-contact.html']
+  ]}
+];
 
-  /* -- 0. Text-to-URL map for dropdown items that lack href -- */
-  var NAV_MAP = {
-    'platform overview': '/zuuz-platform-overview-v2.html',
-    'overview': '/zuuz-platform-overview-v2.html',
-    'ai agents': '/zuuz-ai-agents.html',
-    'workflow automation': '/zuuz-workflow-automation.html',
-    'unified search': '/zuuz-unified-search.html',
-    'decision intelligence': '/zuuz-decision-intelligence.html',
-    'agent-to-agent (a2a)': '/zuuz-a2a.html',
-    'a2a': '/zuuz-a2a.html',
-    'universal connectivity': '/zuuz-universal-connectivity.html',
-    'security & governance': '/zuuz-security.html',
-    'security': '/zuuz-security.html',
-    'pricing': '/pricing/index.html',
-    'by industry': '/zuuz-solutions-industry.html',
-    'by role': '/zuuz-solutions-role.html',
-    'by use case': '/zuuz-solutions-usecase.html',
-    'roi calculator': '/zuuz-roi-calculator.html',
-    'how zuuz works': '/zuuz-how-zuuz-works.html',
-    'case studies': '/zuuz-case-studies.html',
-    'about': '/zuuz-company.html',
-    'company': '/zuuz-company.html',
-    'blog': '/zuuz-blogs.html',
-    'docs': '/zuuz-documentation.html',
-    'documentation': '/zuuz-documentation.html',
-    'contact': '/zuuz-contact.html',
-    'sign in': '/zuuz-signin.html',
-    'book a demo': '/zuuz-book-demo.html'
+/* ── CSS ── */
+var css = [
+  'nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;transition:background .3s}',
+  'nav.scrolled{background:rgba(8,8,16,.95);backdrop-filter:blur(16px);border-bottom:1px solid #1a1a2e}',
+  '.zn-logo{font-size:22px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.04em;font-style:italic;cursor:pointer}',
+  '.zn-links{display:flex;align-items:center;gap:4px}',
+  '.zn-item{position:relative}',
+  '.zn-trigger{background:none;border:none;cursor:pointer;font-family:Montserrat,sans-serif;font-size:13px;font-weight:500;color:#888899;padding:8px 14px;border-radius:4px;display:flex;align-items:center;gap:4px;transition:color .15s}',
+  '.zn-trigger:hover,.zn-item.open .zn-trigger{color:#fff}',
+  '.zn-arrow{font-size:10px;transition:transform .2s;display:inline-block}',
+  '.zn-item.open .zn-arrow{transform:rotate(180deg)}',
+  '.zn-dd{display:none;position:absolute;top:calc(100% + 8px);left:0;background:#0d0d18;border:1px solid #1a1a2e;border-radius:10px;padding:8px;min-width:220px;box-shadow:0 24px 48px rgba(0,0,0,.6);z-index:1001}',
+  '.zn-item.open .zn-dd{display:block}',
+  '.zn-dd-btn{display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:Montserrat,sans-serif;font-size:13px;font-weight:500;color:#888899;padding:9px 14px;border-radius:6px;transition:background .15s}',
+  '.zn-dd-btn:hover{background:rgba(255,255,255,.07);color:#fff}',
+  '.zn-about{background:none;border:none;cursor:pointer;font-family:Montserrat,sans-serif;font-size:13px;font-weight:500;color:#888899;padding:8px 14px;border-radius:4px;transition:color .15s}',
+  '.zn-about:hover{color:#fff}',
+  '.zn-ctas{display:flex;align-items:center;gap:8px}',
+  '.zn-signin{background:none;border:none;cursor:pointer;font-family:Montserrat,sans-serif;font-size:13px;font-weight:600;color:#fff;padding:8px 16px;border-radius:6px;transition:background .15s}',
+  '.zn-signin:hover{background:rgba(255,255,255,.07)}',
+  '.zn-demo{background:#0018FF;border:none;cursor:pointer;font-family:Montserrat,sans-serif;font-size:13px;font-weight:700;color:#fff;padding:10px 20px;border-radius:6px;transition:filter .15s}',
+  '.zn-demo:hover{filter:brightness(1.15)}',
+  '.zn-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}',
+  '.zn-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px}',
+  '#zn-mob{display:none;position:fixed;inset:0;background:rgba(8,8,16,.98);z-index:9999;padding:72px 24px 40px;overflow-y:auto}',
+  '#zn-mob.open{display:block}',
+  '.zn-mob-x{position:fixed;top:18px;right:20px;background:none;border:none;color:#fff;font-size:30px;cursor:pointer;line-height:1;z-index:10000}',
+  '.zn-mob-sec{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#555570;padding:16px 0 6px}',
+  '.zn-mob-link{display:block;font-size:16px;font-weight:700;color:#fff;padding:11px 0;border-bottom:1px solid #1a1a2e;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;font-family:Montserrat,sans-serif;text-align:left;width:100%}',
+  '.zn-mob-link:hover{color:#a3f3ff}',
+  '.zn-mob-ctas{display:flex;flex-direction:column;gap:12px;margin-top:28px}',
+  '.zn-mob-ctas button{display:block;width:100%;padding:14px;border-radius:8px;font-family:Montserrat,sans-serif;font-weight:700;font-size:15px;cursor:pointer;border:none}',
+  '.zn-mob-p{background:#0018FF;color:#fff}',
+  '.zn-mob-g{background:transparent;border:1px solid #333!important;color:#fff}',
+  '@media(max-width:900px){.zn-links,.zn-ctas{display:none!important}.zn-burger{display:flex!important}}',
+  '@media(max-width:768px){body{overflow-x:hidden}.container{padding:0 20px!important}.grid-2,.grid-3,.grid-4,.impact-grid{grid-template-columns:1fr!important}.dept-wrap{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}.hero{padding:100px 0 60px!important}.section{padding:60px 0!important}}'
+].join('');
+var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+
+/* ── Replace entire nav ── */
+var oldNav=document.getElementById('nav')||document.querySelector('nav');
+if(!oldNav) return;
+
+var nav=document.createElement('nav');
+nav.id='nav';
+
+/* Logo */
+var logo=document.createElement('button');
+logo.className='zn-logo';
+logo.textContent='ZUUZ';
+logo.onclick=function(){window.location.href='/';};
+nav.appendChild(logo);
+
+/* Links */
+var links=document.createElement('div');
+links.className='zn-links';
+
+NAV.forEach(function(section){
+  var item=document.createElement('div');
+  item.className='zn-item';
+
+  var trig=document.createElement('button');
+  trig.className='zn-trigger';
+  trig.innerHTML=section.label+' <span class="zn-arrow">&#9660;</span>';
+  trig.onclick=function(e){
+    e.stopPropagation();
+    var isOpen=item.classList.contains('open');
+    document.querySelectorAll('.zn-item.open').forEach(function(o){o.classList.remove('open');});
+    if(!isOpen) item.classList.add('open');
   };
+  item.appendChild(trig);
 
-  /* -- CSS injection -- */
-  var s = document.createElement('style');
-  s.textContent =
-    /* disable CSS hover-open on new pages */
-    '.nav-item:hover .dd{display:none!important}' +
-    /* disable CSS hover-open on old pages */
-    '.nav-item:hover .dropdown{display:none!important}' +
-    /* open class drives visibility */
-    '.nav-item.open .dd{display:block!important;pointer-events:all!important}' +
-    '.nav-item.open .dropdown{display:block!important;pointer-events:all!important}' +
-    /* closed dropdowns non-interactive */
-    '.dd{pointer-events:none}' +
-    /* dropdown item pointer cursor if nav-mapped */
-    '.dropdown .dd-mapped,.dd .dd-mapped{cursor:pointer!important;color:#ccc;padding:9px 14px;display:block;width:100%;text-align:left;font-size:13px;font-weight:500;border-radius:6px;transition:background .15s;box-sizing:border-box}' +
-    '.dropdown .dd-mapped:hover,.dd .dd-mapped:hover{background:rgba(255,255,255,.06);color:#fff}' +
-    /* mobile burger */
-    '#zuuz-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:300}' +
-    '#zuuz-burger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s}' +
-    '#zuuz-mob{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,16,.97);z-index:9999;padding:80px 24px 40px;overflow-y:auto}' +
-    '#zuuz-mob.open{display:block}' +
-    '#zuuz-mob-x{position:fixed;top:20px;right:20px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;line-height:1;z-index:10000}' +
-    '.zm-links a{display:block;font-size:17px;font-weight:700;color:#fff;padding:13px 0;border-bottom:1px solid #1a1a2e;text-decoration:none;cursor:pointer}' +
-    '.zm-links a:hover{color:#a3f3ff}' +
-    '.zm-sec{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#555570;padding:16px 0 6px}' +
-    '.zm-ctas{display:flex;flex-direction:column;gap:12px;margin-top:28px}' +
-    '.zm-ctas a{display:block;text-align:center;padding:14px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer}' +
-    '.zm-p{background:#0018FF;color:#fff}' +
-    '.zm-g{border:1px solid #333;color:#fff}' +
-    '@media(max-width:900px){.nav-links,.nav-ctas,.nl-wrap{display:none!important}#zuuz-burger{display:flex!important}}' +
-    '@media(max-width:768px){body{overflow-x:hidden!important}nav{padding:0 20px!important}.container{padding:0 20px!important}.grid-2,.grid-3,.grid-4,.impact-grid{grid-template-columns:1fr!important}.dept-wrap{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}';
-  document.head.appendChild(s);
-
-  /* -- 1. Remove arrows from nav triggers -- */
-  document.querySelectorAll('.nl, .nav-link').forEach(function (el) {
-    el.childNodes.forEach(function (node) {
-      if (node.nodeType === 3) {
-        node.textContent = node.textContent.replace(/[\u25be\u25bc\u25b4\u25b2\u25bf\u25c2\u25b8]/g, '').replace(/\s+$/, '');
-      }
-    });
-    el.querySelectorAll('span').forEach(function (sp) {
-      if (/^[\u25be\u25bc\u25b4\u25b2\u25bf\s]*$/.test(sp.textContent)) sp.remove();
-    });
+  var dd=document.createElement('div');
+  dd.className='zn-dd';
+  section.items.forEach(function(e){
+    var btn=document.createElement('button');
+    btn.className='zn-dd-btn';
+    btn.textContent=e[0];
+    btn.onclick=function(ev){ev.stopPropagation();window.location.href=e[1];};
+    dd.appendChild(btn);
   });
+  item.appendChild(dd);
+  links.appendChild(item);
+});
 
-  /* -- 2. Click-toggle dropdowns -- */
-  document.querySelectorAll('.nav-item').forEach(function (item) {
-    var trigger = item.querySelector('.nl') || item.querySelector('.nav-link');
-    var panel = item.querySelector('.dd') || item.querySelector('.dropdown');
-    if (!trigger || !panel) return;
+/* About */
+var about=document.createElement('button');
+about.className='zn-about';
+about.textContent='About';
+about.onclick=function(){window.location.href='zuuz-company.html';};
+links.appendChild(about);
 
-    trigger.addEventListener('click', function (ev) {
-      ev.stopPropagation();
-      var wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
-      if (!wasOpen) item.classList.add('open');
-    });
+nav.appendChild(links);
+
+/* CTAs */
+var ctas=document.createElement('div');
+ctas.className='zn-ctas';
+var signin=document.createElement('button');
+signin.className='zn-signin';
+signin.textContent='Sign in';
+signin.onclick=function(){window.location.href='zuuz-signin.html';};
+var demo=document.createElement('button');
+demo.className='zn-demo';
+demo.textContent='Book a demo →';
+demo.onclick=function(){window.location.href='zuuz-book-demo.html';};
+ctas.appendChild(signin);
+ctas.appendChild(demo);
+nav.appendChild(ctas);
+
+/* Burger */
+var burger=document.createElement('button');
+burger.className='zn-burger';
+burger.setAttribute('aria-label','Menu');
+burger.innerHTML='<span></span><span></span><span></span>';
+burger.onclick=function(e){e.stopPropagation();document.getElementById('zn-mob').classList.add('open');};
+nav.appendChild(burger);
+
+oldNav.parentNode.replaceChild(nav,oldNav);
+
+/* Close dropdowns on outside click */
+document.addEventListener('click',function(){
+  document.querySelectorAll('.zn-item.open').forEach(function(o){o.classList.remove('open');});
+});
+
+/* Scroll */
+window.addEventListener('scroll',function(){
+  nav.classList.toggle('scrolled',window.scrollY>30);
+},{passive:true});
+
+/* ── Mobile nav ── */
+var mob=document.createElement('div');
+mob.id='zn-mob';
+var mobHTML='<button class="zn-mob-x" onclick="document.getElementById(\'zn-mob\').classList.remove(\'open\')">&#10005;</button>';
+NAV.forEach(function(section){
+  mobHTML+='<div class="zn-mob-sec">'+section.label+'</div>';
+  section.items.forEach(function(e){
+    mobHTML+='<button class="zn-mob-link" onclick="window.location.href=\''+e[1]+'\'">'+e[0]+'</button>';
   });
+});
+mobHTML+='<button class="zn-mob-link" onclick="window.location.href=\'zuuz-company.html\'">About</button>';
+mobHTML+='<button class="zn-mob-link" onclick="window.location.href=\'pricing/index.html\'">Pricing</button>';
+mobHTML+='<div class="zn-mob-ctas">';
+mobHTML+='<button class="zn-mob-g" onclick="window.location.href=\'zuuz-signin.html\'">Sign in</button>';
+mobHTML+='<button class="zn-mob-p" onclick="window.location.href=\'zuuz-book-demo.html\'">Book a demo →</button>';
+mobHTML+='</div>';
+mob.innerHTML=mobHTML;
+document.body.appendChild(mob);
 
-  /* -- 3. Close on outside mousedown -- */
-  document.addEventListener('mousedown', function (e) {
-    if (!e.target.closest('.nav-item')) {
-      document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
-    }
-  });
-
-  /* -- 4. Wire navigation to dropdown items that have no href -- */
-  document.querySelectorAll('.dropdown, .dd').forEach(function (panel) {
-    panel.querySelectorAll('div, span, button').forEach(function (el) {
-      /* skip if already an <a> or has click listener with href */
-      if (el.tagName === 'A') return;
-      var txt = (el.textContent || '').trim().toLowerCase();
-      /* only direct children with meaningful text */
-      if (el.children.length > 0) return;
-      if (!txt) return;
-      var url = NAV_MAP[txt];
-      if (url) {
-        el.classList.add('dd-mapped');
-        el.setAttribute('role', 'button');
-        el.setAttribute('tabindex', '0');
-        el.addEventListener('click', function (ev) {
-          ev.stopPropagation();
-          window.location.href = url;
-        });
-        el.addEventListener('keydown', function (ev) {
-          if (ev.key === 'Enter' || ev.key === ' ') window.location.href = url;
-        });
-      }
-    });
-  });
-
-  /* -- 5. Hamburger -- */
-  var navEl = document.getElementById('nav');
-  if (navEl && !document.getElementById('zuuz-burger')) {
-    var burger = document.createElement('button');
-    burger.id = 'zuuz-burger';
-    burger.setAttribute('aria-label', 'Open menu');
-    burger.innerHTML = '<span></span><span></span><span></span>';
-    navEl.appendChild(burger);
-    burger.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var mob = document.getElementById('zuuz-mob');
-      if (mob) mob.classList.add('open');
-    });
-  }
-
-  /* -- 6. Mobile overlay -- */
-  if (!document.getElementById('zuuz-mob')) {
-    var mob = document.createElement('div');
-    mob.id = 'zuuz-mob';
-    mob.innerHTML =
-      '<button id="zuuz-mob-x">&times;</button>' +
-      '<div class="zm-links">' +
-      '<div class="zm-sec">Platform</div>' +
-      '<a onclick="location.href=\'zuuz-platform-overview-v2.html\'" >Platform Overview</a>' +
-      '<a onclick="location.href=\'zuuz-ai-agents.html\'" >AI Agents</a>' +
-      '<a onclick="location.href=\'zuuz-workflow-automation.html\'" >Workflow Automation</a>' +
-      '<a onclick="location.href=\'zuuz-unified-search.html\'" >Unified Search</a>' +
-      '<div class="zm-sec">Solutions</div>' +
-      '<a onclick="location.href=\'zuuz-solutions-industry.html\'" >By Industry</a>' +
-      '<a onclick="location.href=\'zuuz-solutions-role.html\'" >By Role</a>' +
-      '<a onclick="location.href=\'zuuz-solutions-usecase.html\'" >By Use Case</a>' +
-      '<div class="zm-sec">Why ZUUZ</div>' +
-      '<a onclick="location.href=\'zuuz-how-zuuz-works.html\'" >How ZUUZ Works</a>' +
-      '<a onclick="location.href=\'zuuz-case-studies.html\'" >Case Studies</a>' +
-      '<a onclick="location.href=\'zuuz-roi-calculator.html\'" >ROI Calculator</a>' +
-      '<div class="zm-sec">Resources</div>' +
-      '<a onclick="location.href=\'zuuz-blogs.html\'" >Blog</a>' +
-      '<a onclick="location.href=\'zuuz-documentation.html\'" >Docs</a>' +
-      '<a onclick="location.href=\'zuuz-contact.html\'" >Contact</a>' +
-      '<a onclick="location.href=\'zuuz-company.html\'" >About</a>' +
-      '<a onclick="location.href=\'pricing/index.html\'" >Pricing</a>' +
-      '</div>' +
-      '<div class="zm-ctas">' +
-      '<a class="zm-g" onclick="location.href=\'zuuz-signin.html\'" >Sign in</a>' +
-      '<a class="zm-p" onclick="location.href=\'zuuz-book-demo.html\'" >Book a demo</a>' +
-      '</div>';
-    document.body.appendChild(mob);
-    document.getElementById('zuuz-mob-x').addEventListener('click', function () {
-      mob.classList.remove('open');
-    });
-  }
-
-  /* -- 7. Nav scroll shadow -- */
-  window.addEventListener('scroll', function () {
-    var n = document.getElementById('nav');
-    if (n) n.classList.toggle('scrolled', window.scrollY > 30);
-  }, { passive: true });
+/* Industry cards */
+document.querySelectorAll('.ind-card').forEach(function(c){
+  c.style.cursor='pointer';
+  c.addEventListener('click',function(){window.location.href='zuuz-solutions-industry.html';});
+});
 
 })();
