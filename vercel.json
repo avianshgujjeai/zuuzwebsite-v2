@@ -1,18 +1,611 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/zuuz-homepage-v3.html"
+    },
+    {
+      "source": "/platform",
+      "destination": "/zuuz-platform-overview-v3.html"
+    },
+    {
+      "source": "/platform/",
+      "destination": "/zuuz-platform-overview-v3.html"
+    },
+    {
+      "source": "/platform",
+      "destination": "/zuuz-platform-overview-v2.html"
+    },
+    {
+      "source": "/platform/",
+      "destination": "/zuuz-platform-overview-v2.html"
+    },
+    {
+      "source": "/platform",
+      "destination": "/zuuz-platform-overview.html"
+    },
+    {
+      "source": "/platform/",
+      "destination": "/zuuz-platform-overview.html"
+    },
+    {
+      "source": "/platform/ai-agents",
+      "destination": "/zuuz-ai-agents.html"
+    },
+    {
+      "source": "/platform/ai-agents/",
+      "destination": "/zuuz-ai-agents.html"
+    },
+    {
+      "source": "/platform/workflow-automation",
+      "destination": "/zuuz-workflow-automation.html"
+    },
+    {
+      "source": "/platform/workflow-automation/",
+      "destination": "/zuuz-workflow-automation.html"
+    },
+    {
+      "source": "/platform/unified-search",
+      "destination": "/zuuz-unified-search.html"
+    },
+    {
+      "source": "/platform/unified-search/",
+      "destination": "/zuuz-unified-search.html"
+    },
+    {
+      "source": "/platform/decision-intelligence",
+      "destination": "/zuuz-decision-intelligence.html"
+    },
+    {
+      "source": "/platform/decision-intelligence/",
+      "destination": "/zuuz-decision-intelligence.html"
+    },
+    {
+      "source": "/platform/a2a",
+      "destination": "/zuuz-a2a.html"
+    },
+    {
+      "source": "/platform/a2a/",
+      "destination": "/zuuz-a2a.html"
+    },
+    {
+      "source": "/platform/universal-connectivity",
+      "destination": "/zuuz-universal-connectivity.html"
+    },
+    {
+      "source": "/platform/universal-connectivity/",
+      "destination": "/zuuz-universal-connectivity.html"
+    },
+    {
+      "source": "/platform/security-governance",
+      "destination": "/zuuz-security-governance.html"
+    },
+    {
+      "source": "/platform/security-governance/",
+      "destination": "/zuuz-security-governance.html"
+    },
+    {
+      "source": "/platform/audit-trail",
+      "destination": "/zuuz-audit-trail.html"
+    },
+    {
+      "source": "/platform/audit-trail/",
+      "destination": "/zuuz-audit-trail.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/zuuz-pricing.html"
+    },
+    {
+      "source": "/pricing/",
+      "destination": "/zuuz-pricing.html"
+    },
+    {
+      "source": "/solutions/industry",
+      "destination": "/zuuz-solutions-industry.html"
+    },
+    {
+      "source": "/solutions/industry/",
+      "destination": "/zuuz-solutions-industry.html"
+    },
+    {
+      "source": "/solutions/role",
+      "destination": "/zuuz-solutions-role.html"
+    },
+    {
+      "source": "/solutions/role/",
+      "destination": "/zuuz-solutions-role.html"
+    },
+    {
+      "source": "/solutions/use-case",
+      "destination": "/zuuz-solutions-usecase.html"
+    },
+    {
+      "source": "/solutions/use-case/",
+      "destination": "/zuuz-solutions-usecase.html"
+    },
+    {
+      "source": "/solutions/industry/banking-financial-services",
+      "destination": "/zuuz-industry-bankingfinancialservices.html"
+    },
+    {
+      "source": "/solutions/industry/banking-financial-services/",
+      "destination": "/zuuz-industry-bankingfinancialservices.html"
+    },
+    {
+      "source": "/solutions/industry/healthcare",
+      "destination": "/zuuz-industry-healthcare.html"
+    },
+    {
+      "source": "/solutions/industry/healthcare/",
+      "destination": "/zuuz-industry-healthcare.html"
+    },
+    {
+      "source": "/solutions/industry/insurance",
+      "destination": "/zuuz-industry-insurance.html"
+    },
+    {
+      "source": "/solutions/industry/insurance/",
+      "destination": "/zuuz-industry-insurance.html"
+    },
+    {
+      "source": "/solutions/industry/retail-cpg",
+      "destination": "/zuuz-industry-retailcpg.html"
+    },
+    {
+      "source": "/solutions/industry/retail-cpg/",
+      "destination": "/zuuz-industry-retailcpg.html"
+    },
+    {
+      "source": "/solutions/industry/distribution-logistics",
+      "destination": "/zuuz-industry-distributionlogistics.html"
+    },
+    {
+      "source": "/solutions/industry/distribution-logistics/",
+      "destination": "/zuuz-industry-distributionlogistics.html"
+    },
+    {
+      "source": "/solutions/industry/manufacturing",
+      "destination": "/zuuz-industry-manufacturing.html"
+    },
+    {
+      "source": "/solutions/industry/manufacturing/",
+      "destination": "/zuuz-industry-manufacturing.html"
+    },
+    {
+      "source": "/solutions/industry/energy-utilities",
+      "destination": "/zuuz-industry-energyutilities.html"
+    },
+    {
+      "source": "/solutions/industry/energy-utilities/",
+      "destination": "/zuuz-industry-energyutilities.html"
+    },
+    {
+      "source": "/solutions/industry/life-sciences-pharma",
+      "destination": "/zuuz-industry-lifesciencespharma.html"
+    },
+    {
+      "source": "/solutions/industry/life-sciences-pharma/",
+      "destination": "/zuuz-industry-lifesciencespharma.html"
+    },
+    {
+      "source": "/solutions/industry/professional-services",
+      "destination": "/zuuz-industry-professionalservices.html"
+    },
+    {
+      "source": "/solutions/industry/professional-services/",
+      "destination": "/zuuz-industry-professionalservices.html"
+    },
+    {
+      "source": "/solutions/industry/it-services",
+      "destination": "/zuuz-industry-itservices.html"
+    },
+    {
+      "source": "/solutions/industry/it-services/",
+      "destination": "/zuuz-industry-itservices.html"
+    },
+    {
+      "source": "/solutions/role/ceo-executive",
+      "destination": "/zuuz-role-ceoexecutive.html"
+    },
+    {
+      "source": "/solutions/role/ceo-executive/",
+      "destination": "/zuuz-role-ceoexecutive.html"
+    },
+    {
+      "source": "/solutions/role/operations-manager",
+      "destination": "/zuuz-role-operationsmanager.html"
+    },
+    {
+      "source": "/solutions/role/operations-manager/",
+      "destination": "/zuuz-role-operationsmanager.html"
+    },
+    {
+      "source": "/solutions/role/finance-cfo",
+      "destination": "/zuuz-role-financecfo.html"
+    },
+    {
+      "source": "/solutions/role/finance-cfo/",
+      "destination": "/zuuz-role-financecfo.html"
+    },
+    {
+      "source": "/solutions/role/sales-revenue",
+      "destination": "/zuuz-role-salesrevenue.html"
+    },
+    {
+      "source": "/solutions/role/sales-revenue/",
+      "destination": "/zuuz-role-salesrevenue.html"
+    },
+    {
+      "source": "/solutions/role/marketing",
+      "destination": "/zuuz-role-marketing.html"
+    },
+    {
+      "source": "/solutions/role/marketing/",
+      "destination": "/zuuz-role-marketing.html"
+    },
+    {
+      "source": "/solutions/role/procurement",
+      "destination": "/zuuz-role-procurement.html"
+    },
+    {
+      "source": "/solutions/role/procurement/",
+      "destination": "/zuuz-role-procurement.html"
+    },
+    {
+      "source": "/solutions/role/hr-people-ops",
+      "destination": "/zuuz-role-hrpeopleops.html"
+    },
+    {
+      "source": "/solutions/role/hr-people-ops/",
+      "destination": "/zuuz-role-hrpeopleops.html"
+    },
+    {
+      "source": "/solutions/role/legal-compliance",
+      "destination": "/zuuz-role-legalcompliance.html"
+    },
+    {
+      "source": "/solutions/role/legal-compliance/",
+      "destination": "/zuuz-role-legalcompliance.html"
+    },
+    {
+      "source": "/solutions/role/it-support",
+      "destination": "/zuuz-role-itsupport.html"
+    },
+    {
+      "source": "/solutions/role/it-support/",
+      "destination": "/zuuz-role-itsupport.html"
+    },
+    {
+      "source": "/solutions/role/field-operations",
+      "destination": "/zuuz-role-fieldoperations.html"
+    },
+    {
+      "source": "/solutions/role/field-operations/",
+      "destination": "/zuuz-role-fieldoperations.html"
+    },
+    {
+      "source": "/solutions/use-case/approval-automation",
+      "destination": "/zuuz-usecase-approvalautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/approval-automation/",
+      "destination": "/zuuz-usecase-approvalautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/demand-inventory-management",
+      "destination": "/zuuz-usecase-demandinventorymanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/demand-inventory-management/",
+      "destination": "/zuuz-usecase-demandinventorymanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/supplier-vendor-management",
+      "destination": "/zuuz-usecase-suppliervendormanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/supplier-vendor-management/",
+      "destination": "/zuuz-usecase-suppliervendormanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/returns-rma-management",
+      "destination": "/zuuz-usecase-returnsrmamanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/returns-rma-management/",
+      "destination": "/zuuz-usecase-returnsrmamanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/incident-detection-resolution",
+      "destination": "/zuuz-usecase-incidentdetectionresolution.html"
+    },
+    {
+      "source": "/solutions/use-case/incident-detection-resolution/",
+      "destination": "/zuuz-usecase-incidentdetectionresolution.html"
+    },
+    {
+      "source": "/solutions/use-case/sales-pipeline-deal-desk",
+      "destination": "/zuuz-usecase-salespipelinedealdest.html"
+    },
+    {
+      "source": "/solutions/use-case/sales-pipeline-deal-desk/",
+      "destination": "/zuuz-usecase-salespipelinedealdest.html"
+    },
+    {
+      "source": "/solutions/use-case/sales-pipeline-deal-desk",
+      "destination": "/zuuz-usecase-salespipelinedealdesk.html"
+    },
+    {
+      "source": "/solutions/use-case/sales-pipeline-deal-desk/",
+      "destination": "/zuuz-usecase-salespipelinedealdesk.html"
+    },
+    {
+      "source": "/solutions/use-case/marketing-campaign-management",
+      "destination": "/zuuz-usecase-marketingcampaignmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/marketing-campaign-management/",
+      "destination": "/zuuz-usecase-marketingcampaignmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/trade-promotion-management",
+      "destination": "/zuuz-usecase-tradepromotionmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/trade-promotion-management/",
+      "destination": "/zuuz-usecase-tradepromotionmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/marketplace-ecommerce-operations",
+      "destination": "/zuuz-usecase-marketplaceecommerceoperations.html"
+    },
+    {
+      "source": "/solutions/use-case/marketplace-ecommerce-operations/",
+      "destination": "/zuuz-usecase-marketplaceecommerceoperations.html"
+    },
+    {
+      "source": "/solutions/use-case/partner-channel-management",
+      "destination": "/zuuz-usecase-partnerchannelmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/partner-channel-management/",
+      "destination": "/zuuz-usecase-partnerchannelmanagement.html"
+    },
+    {
+      "source": "/solutions/use-case/customer-support-automation",
+      "destination": "/zuuz-usecase-customersupportautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/customer-support-automation/",
+      "destination": "/zuuz-usecase-customersupportautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/employee-leave-onboarding",
+      "destination": "/zuuz-usecase-employeeleaveonboarding.html"
+    },
+    {
+      "source": "/solutions/use-case/employee-leave-onboarding/",
+      "destination": "/zuuz-usecase-employeeleaveonboarding.html"
+    },
+    {
+      "source": "/solutions/use-case/workforce-analytics-performance",
+      "destination": "/zuuz-usecase-workforceanalyticsperformance.html"
+    },
+    {
+      "source": "/solutions/use-case/workforce-analytics-performance/",
+      "destination": "/zuuz-usecase-workforceanalyticsperformance.html"
+    },
+    {
+      "source": "/solutions/use-case/contract-review-compliance",
+      "destination": "/zuuz-usecase-contractreviewcompliance.html"
+    },
+    {
+      "source": "/solutions/use-case/contract-review-compliance/",
+      "destination": "/zuuz-usecase-contractreviewcompliance.html"
+    },
+    {
+      "source": "/solutions/use-case/retail-execution",
+      "destination": "/zuuz-usecase-retailexecution.html"
+    },
+    {
+      "source": "/solutions/use-case/retail-execution/",
+      "destination": "/zuuz-usecase-retailexecution.html"
+    },
+    {
+      "source": "/solutions/use-case/email-intelligence-inbox-automation",
+      "destination": "/zuuz-usecase-emailintelligenceinboxautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/email-intelligence-inbox-automation/",
+      "destination": "/zuuz-usecase-emailintelligenceinboxautomation.html"
+    },
+    {
+      "source": "/solutions/use-case/meeting-intelligence-action-tracking",
+      "destination": "/zuuz-usecase-meetingintelligenceactiontracking.html"
+    },
+    {
+      "source": "/solutions/use-case/meeting-intelligence-action-tracking/",
+      "destination": "/zuuz-usecase-meetingintelligenceactiontracking.html"
+    },
+    {
+      "source": "/solutions/use-case/document-summarisation-review",
+      "destination": "/zuuz-usecase-documentsummarisationreview.html"
+    },
+    {
+      "source": "/solutions/use-case/document-summarisation-review/",
+      "destination": "/zuuz-usecase-documentsummarisationreview.html"
+    },
+    {
+      "source": "/solutions/use-case/knowledge-search-discovery",
+      "destination": "/zuuz-usecase-knowledgesearchdiscovery.html"
+    },
+    {
+      "source": "/solutions/use-case/knowledge-search-discovery/",
+      "destination": "/zuuz-usecase-knowledgesearchdiscovery.html"
+    },
+    {
+      "source": "/solutions/use-case/workforce-productivity-analytics",
+      "destination": "/zuuz-usecase-workforceproductivityanalytics.html"
+    },
+    {
+      "source": "/solutions/use-case/workforce-productivity-analytics/",
+      "destination": "/zuuz-usecase-workforceproductivityanalytics.html"
+    },
+    {
+      "source": "/solutions/use-case/document-management-legal-hold",
+      "destination": "/zuuz-usecase-documentmanagementlegalhold.html"
+    },
+    {
+      "source": "/solutions/use-case/document-management-legal-hold/",
+      "destination": "/zuuz-usecase-documentmanagementlegalhold.html"
+    },
+    {
+      "source": "/why-zuuz/how-it-works",
+      "destination": "/zuuz-how-zuuz-works.html"
+    },
+    {
+      "source": "/why-zuuz/how-it-works/",
+      "destination": "/zuuz-how-zuuz-works.html"
+    },
+    {
+      "source": "/why-zuuz/vs-erp-crm",
+      "destination": "/zuuz-vs-erp-crm.html"
+    },
+    {
+      "source": "/why-zuuz/vs-erp-crm/",
+      "destination": "/zuuz-vs-erp-crm.html"
+    },
+    {
+      "source": "/why-zuuz/vs-chatbots-copilots",
+      "destination": "/zuuz-vs-chatbots-copilots.html"
+    },
+    {
+      "source": "/why-zuuz/vs-chatbots-copilots/",
+      "destination": "/zuuz-vs-chatbots-copilots.html"
+    },
+    {
+      "source": "/why-zuuz/vs-legacy-workflow-tools",
+      "destination": "/zuuz-vs-legacy-workflow-tools.html"
+    },
+    {
+      "source": "/why-zuuz/vs-legacy-workflow-tools/",
+      "destination": "/zuuz-vs-legacy-workflow-tools.html"
+    },
+    {
+      "source": "/resources/blogs",
+      "destination": "/zuuz-blogs.html"
+    },
+    {
+      "source": "/resources/blogs/",
+      "destination": "/zuuz-blogs.html"
+    },
+    {
+      "source": "/resources/case-studies",
+      "destination": "/zuuz-case-studies.html"
+    },
+    {
+      "source": "/resources/case-studies/",
+      "destination": "/zuuz-case-studies.html"
+    },
+    {
+      "source": "/resources/roi-calculator",
+      "destination": "/zuuz-roi-calculator.html"
+    },
+    {
+      "source": "/resources/roi-calculator/",
+      "destination": "/zuuz-roi-calculator.html"
+    },
+    {
+      "source": "/resources/maturity-assessment",
+      "destination": "/zuuz-maturity-assessment.html"
+    },
+    {
+      "source": "/resources/maturity-assessment/",
+      "destination": "/zuuz-maturity-assessment.html"
+    },
+    {
+      "source": "/resources/agent-library",
+      "destination": "/zuuz-agent-library.html"
+    },
+    {
+      "source": "/resources/agent-library/",
+      "destination": "/zuuz-agent-library.html"
+    },
+    {
+      "source": "/resources/documentation",
+      "destination": "/zuuz-documentation.html"
+    },
+    {
+      "source": "/resources/documentation/",
+      "destination": "/zuuz-documentation.html"
+    },
+    {
+      "source": "/resources/api-reference",
+      "destination": "/zuuz-api-reference.html"
+    },
+    {
+      "source": "/resources/api-reference/",
+      "destination": "/zuuz-api-reference.html"
+    },
+    {
+      "source": "/resources/webinars-events",
+      "destination": "/zuuz-webinars-events.html"
+    },
+    {
+      "source": "/resources/webinars-events/",
+      "destination": "/zuuz-webinars-events.html"
+    },
+    {
+      "source": "/about/company",
+      "destination": "/zuuz-company.html"
+    },
+    {
+      "source": "/about/company/",
+      "destination": "/zuuz-company.html"
+    },
+    {
+      "source": "/about/leadership",
+      "destination": "/zuuz-leadership.html"
+    },
+    {
+      "source": "/about/leadership/",
+      "destination": "/zuuz-leadership.html"
+    },
+    {
+      "source": "/about/careers",
+      "destination": "/zuuz-careers.html"
+    },
+    {
+      "source": "/about/careers/",
+      "destination": "/zuuz-careers.html"
+    },
+    {
+      "source": "/about/contact",
+      "destination": "/zuuz-contact.html"
+    },
+    {
+      "source": "/about/contact/",
+      "destination": "/zuuz-contact.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache" }
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/platform", "destination": "/zuuz-platform-overview-v2.html" },
-    { "source": "/pricing", "destination": "/pricing/index.html" },
-    { "source": "/solutions", "destination": "/zuuz-solutions-industry.html" },
-    { "source": "/about", "destination": "/zuuz-company.html" }
   ]
 }

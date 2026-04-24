@@ -176,6 +176,65 @@ footer{background:var(--blk);padding:64px 0 32px;border-top:1px solid var(--bdr)
 /* ── CTA ── */
 .cta-section{background:var(--e);padding:100px 0;position:relative;overflow:hidden;text-align:center}
 .cta-section .kicker{color:var(--sky)}
+
+/* ── MOBILE RESPONSIVE ──────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-links { display: none !important; }
+  #nav-signin, #nav-trial { display: none !important; }
+  #mob-toggle { display: flex !important; }
+  #nav-demo { display: none !important; }
+}
+@media (max-width: 768px) {
+  .c { padding: 0 20px !important; }
+  nav { padding: 0 20px !important; }
+  .hero { padding: 96px 0 48px !important; }
+  .sec { padding: 48px 0 !important; }
+  section[style*="padding:80px"] { padding: 48px 0 !important; }
+  section[style*="padding:64px"] { padding: 40px 0 !important; }
+  section[style*="padding:56px"] { padding: 36px 0 !important; }
+  .hg { display: none !important; }
+  body { overflow-x: hidden; }
+  /* Typography */
+  h1.d { font-size: 32px !important; line-height: 1.08 !important; }
+  h2.s { font-size: 26px !important; }
+  h2 { font-size: 24px !important; }
+  /* All 2-col grids → 1 col */
+  .imp-grid, .hw-grid, .feat-grid, .sp-grid, .for-grid,
+  .impl-grid, .pnav-grid, .ladder,
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:1fr 2fr"],
+  [style*="grid-template-columns:2fr 1fr"],
+  [style*="grid-template-columns:repeat(2"],
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns:repeat(4"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  /* Comparison tables */
+  [style*="grid-template-columns:2fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* FAQ */
+  .faq-wrap { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .faq-sticky { position: relative !important; top: auto !important; }
+  /* ROI */
+  .roi-wrap { grid-template-columns: 1fr !important; }
+  /* Buttons */
+  .bp, .bg { width: 100% !important; justify-content: center; box-sizing: border-box; }
+  /* Sticky bar */
+  #sb { padding: 10px 16px !important; flex-direction: column !important; gap: 6px !important; }
+  /* Footer */
+  .fg { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+  .fb { flex-direction: column; gap: 6px; }
+  /* Mock widget */
+  .mock { max-width: 100%; overflow: hidden; }
+}
+@media (max-width: 480px) {
+  h1.d { font-size: 28px !important; }
+  h2.s, h2 { font-size: 22px !important; }
+  .fg { grid-template-columns: 1fr !important; }
+}
+
 </style>
 </head>
 <body>
@@ -183,41 +242,80 @@ footer{background:var(--blk);padding:64px 0 32px;border-top:1px solid var(--bdr)
 <!-- ══ NAV ══════════════════════════════════════════════ -->
 <nav id="nav">
   <div style="display:flex;align-items:center;gap:6px">
-    <span style="font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.04em;color:var(--wht)">ZUUZ</span>
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+    <a href="/" style="display:flex;align-items:center;gap:6px;text-decoration:none">
+      <span style="font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.04em;color:#fff">ZUUZ</span>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 1L13.8 10.2L23 12L13.8 13.8L12 23L10.2 13.8L1 12L10.2 10.2Z" fill="#0018FF"/></svg>
+    </a>
   </div>
-  <div class="nav-links">
+  <div class="nav-links" style="display:flex;align-items:center;gap:2px">
     <div class="nav-item" style="position:relative">
-      <div class="nav-link" style="color:var(--wht)">Platform <span style="font-size:11px">▾</span>
-        <div class="dropdown">
-          <a class="active-item">Platform Overview</a><a>AI Agents</a><a>Workflow Automation</a>
-          <a>Unified Search</a><a>Decision Intelligence</a><a>Agent-to-Agent (A2A)</a>
-          <a>Universal Connectivity</a><a>Security & Governance</a><a href="pricing/index.html">Pricing</a>
-        </div>
-      </div>
+      <div class="nl lit">Platform &#9660;<div class="dd" style="min-width:520px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0"><div style="padding:8px"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">Overview</div><a href="/platform">Platform Overview</a></div><div style="padding:8px;border-left:1px solid #1A1A2E"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">Capabilities</div><a href="/platform/ai-agents">AI Agents</a><a href="/platform/workflow-automation">Workflow Automation</a><a href="/platform/unified-search">Unified Search</a><a href="/platform/decision-intelligence">Decision Intelligence</a><a href="/platform/a2a">Agent-to-Agent (A2A)</a></div><div style="padding:8px;border-left:1px solid #1A1A2E"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">Foundation</div><a href="/platform/universal-connectivity">Universal Connectivity</a><a href="/platform/security-governance">Security &amp; Governance</a><a href="/platform/audit-trail">Audit Trail</a><div style="border-top:1px solid #1A1A2E;margin:6px 10px"></div><a href="/pricing" style="color:#A3F3FF;font-weight:700">Pricing &#8594;</a></div></div></div>
     </div>
     <div class="nav-item" style="position:relative">
-      <div class="nav-link">Solutions <span style="font-size:11px">▾</span>
-        <div class="dropdown"><a>By Industry</a><a>By Role</a><a>By Use Case</a></div>
-      </div>
+      <div class="nl">Solutions &#9660;<div class="dd" style="min-width:680px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0"><div style="padding:8px"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">By Industry</div><a href="/solutions/industry/banking-financial-services">Banking &amp; Financial</a><a href="/solutions/industry/healthcare">Healthcare</a><a href="/solutions/industry/insurance">Insurance</a><a href="/solutions/industry/retail-cpg">Retail &amp; CPG</a><a href="/solutions/industry/distribution-logistics">Distribution &amp; Logistics</a><a href="/solutions/industry/manufacturing">Manufacturing</a><a href="/solutions/industry/energy-utilities">Energy &amp; Utilities</a><a href="/solutions/industry/life-sciences-pharma">Life Sciences &amp; Pharma</a><a href="/solutions/industry/professional-services">Professional Services</a><a href="/solutions/industry/it-services">IT Services</a></div><div style="padding:8px;border-left:1px solid #1A1A2E"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">By Role</div><a href="/solutions/role/ceo-executive">CEO / Executive</a><a href="/solutions/role/operations-manager">Operations Manager</a><a href="/solutions/role/finance-cfo">Finance &amp; CFO</a><a href="/solutions/role/sales-revenue">Sales &amp; Revenue</a><a href="/solutions/role/marketing">Marketing</a><a href="/solutions/role/procurement">Procurement</a><a href="/solutions/role/hr-people-ops">HR &amp; People Ops</a><a href="/solutions/role/legal-compliance">Legal &amp; Compliance</a><a href="/solutions/role/it-support">IT &amp; Support</a><a href="/solutions/role/field-operations">Field Operations</a></div><div style="padding:8px;border-left:1px solid #1A1A2E"><div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#555570;padding:6px 10px 4px">By Use Case</div><a href="/solutions/use-case/approval-automation">Approval Automation</a><a href="/solutions/use-case/email-intelligence-inbox-automation">Email Intelligence</a><a href="/solutions/use-case/meeting-intelligence-action-tracking">Meeting Intelligence</a><a href="/solutions/use-case/document-management-legal-hold">Document Management</a><a href="/solutions/use-case/sales-pipeline-deal-desk">Sales Pipeline</a><a href="/solutions/use-case/supplier-vendor-management">Supplier Management</a><a href="/solutions/use-case/employee-leave-onboarding">Employee Leave</a><a href="/solutions/use-case/contract-review-compliance">Contract Review</a><a href="/solutions/use-case/incident-detection-resolution">Incident Detection</a><a href="/solutions/use-case/demand-inventory-management">Demand &amp; Inventory</a></div></div></div>
     </div>
     <div class="nav-item" style="position:relative">
-      <div class="nav-link">Why ZUUZ <span style="font-size:11px">▾</span>
-        <div class="dropdown"><a>How ZUUZ Works</a><a>vs Your ERP or CRM</a><a>vs Chatbots & Copilots</a><a>vs Legacy Workflow Tools</a></div>
-      </div>
+      <div class="nl">Why ZUUZ &#9660;<div class="dd"><a href="/why-zuuz/how-it-works">How ZUUZ Works</a><a href="/why-zuuz/vs-erp-crm">vs. Your ERP or CRM</a><a href="/why-zuuz/vs-chatbots-copilots">vs. Chatbots &amp; Copilots</a><a href="/why-zuuz/vs-legacy-workflow-tools">vs. Legacy Workflow Tools</a></div></div>
     </div>
     <div class="nav-item" style="position:relative">
-      <div class="nav-link">Resources <span style="font-size:11px">▾</span>
-        <div class="dropdown"><a>Blogs</a><a>Case Studies</a><a>ROI Calculators</a><a>Agent Library</a><a>Documentation</a></div>
-      </div>
+      <div class="nl">Resources &#9660;<div class="dd"><a href="/resources/blogs">Blogs</a><a href="/resources/case-studies">Case Studies</a><a href="/resources/roi-calculator">ROI Calculator</a><a href="/resources/maturity-assessment">Maturity Assessment</a><a href="/resources/agent-library">Agent Library</a><a href="/resources/documentation">Documentation</a><a href="/resources/api-reference">API Reference</a><a href="/resources/webinars-events">Webinars &amp; Events</a></div></div>
     </div>
-    <div class="nav-link">About</div>
+    <div class="nav-item" style="position:relative">
+      <div class="nl">About &#9660;<div class="dd"><a href="/about/company">Company</a><a href="/about/leadership">Leadership Team</a><a href="/about/careers">Careers</a><a href="/about/contact">Contact</a></div></div>
+    </div>
   </div>
-  <div style="display:flex;gap:10px;align-items:center">
-    <span class="nav-link">Sign in</span>
-    <button class="btn-nav">Book a demo →</button>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span class="nl" style="display:none" id="nav-signin">Sign in</span>
+    <button class="btn-n" style="background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;display:none" id="nav-trial" onclick="document.getElementById('dm').style.display='flex'">Start free trial</button>
+    <button class="btn-n" id="nav-demo" onclick="document.getElementById('dm').style.display='flex'">Book a demo &#8594;</button>
+    <button id="mob-toggle" onclick="document.getElementById('mob-nav').style.display=document.getElementById('mob-nav').style.display==='flex'?'none':'flex'" style="display:none;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;width:36px;height:36px;cursor:pointer;font-size:18px;align-items:center;justify-content:center;flex-shrink:0">&#9776;</button>
   </div>
 </nav>
+<!-- Mobile nav drawer -->
+<div id="mob-nav" style="display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:rgba(8,8,16,.98);z-index:99;flex-direction:column;overflow-y:auto;padding:16px 20px 40px">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555570;padding:12px 0 6px">Platform</div>
+  <a href="/platform" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Platform Overview</a>
+  <a href="/platform/ai-agents" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">AI Agents</a>
+  <a href="/platform/workflow-automation" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Workflow Automation</a>
+  <a href="/platform/unified-search" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Unified Search</a>
+  <a href="/platform/decision-intelligence" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Decision Intelligence</a>
+  <a href="/platform/a2a" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Agent-to-Agent (A2A)</a>
+  <a href="/platform/universal-connectivity" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Universal Connectivity</a>
+  <a href="/platform/security-governance" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Security &amp; Governance</a>
+  <a href="/pricing" style="display:block;padding:10px 0;font-size:14px;font-weight:700;color:#A3F3FF;border-bottom:1px solid #1A1A2E;text-decoration:none">Pricing</a>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555570;padding:16px 0 6px">Solutions — Industry</div>
+  <a href="/solutions/industry/banking-financial-services" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Banking &amp; Financial Services</a>
+  <a href="/solutions/industry/healthcare" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Healthcare</a>
+  <a href="/solutions/industry/insurance" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Insurance</a>
+  <a href="/solutions/industry/retail-cpg" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Retail &amp; CPG</a>
+  <a href="/solutions/industry/distribution-logistics" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Distribution &amp; Logistics</a>
+  <a href="/solutions/industry/manufacturing" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Manufacturing</a>
+  <a href="/solutions/industry/energy-utilities" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Energy &amp; Utilities</a>
+  <a href="/solutions/industry/professional-services" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Professional Services</a>
+  <a href="/solutions/industry/it-services" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">IT Services</a>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555570;padding:16px 0 6px">Solutions — Role</div>
+  <a href="/solutions/role/ceo-executive" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">CEO / Executive</a>
+  <a href="/solutions/role/operations-manager" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Operations Manager</a>
+  <a href="/solutions/role/finance-cfo" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Finance &amp; CFO</a>
+  <a href="/solutions/role/sales-revenue" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Sales &amp; Revenue</a>
+  <a href="/solutions/role/hr-people-ops" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">HR &amp; People Ops</a>
+  <a href="/solutions/role/legal-compliance" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Legal &amp; Compliance</a>
+  <a href="/solutions/role/procurement" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Procurement</a>
+  <a href="/solutions/role/it-support" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">IT &amp; Support</a>
+  <a href="/solutions/role/field-operations" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">Field Operations</a>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555570;padding:16px 0 6px">Why ZUUZ</div>
+  <a href="/why-zuuz/how-it-works" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">How ZUUZ Works</a>
+  <a href="/why-zuuz/vs-erp-crm" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">vs. Your ERP or CRM</a>
+  <a href="/why-zuuz/vs-chatbots-copilots" style="display:block;padding:10px 0;font-size:14px;font-weight:600;color:#888899;border-bottom:1px solid #1A1A2E;text-decoration:none">vs. Chatbots &amp; Copilots</a>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px">
+    <button onclick="document.getElementById('mob-nav').style.display='none';document.getElementById('dm').style.display='flex'" style="padding:13px;background:#0018FF;color:#fff;border:none;border-radius:8px;font-family:Montserrat,sans-serif;font-weight:700;font-size:14px;cursor:pointer">Book a demo &#8594;</button>
+    <button onclick="document.getElementById('mob-nav').style.display='none';document.getElementById('dm').style.display='flex'" style="padding:13px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;font-family:Montserrat,sans-serif;font-weight:700;font-size:14px;cursor:pointer">Start free trial</button>
+  </div>
+</div>
 
 <!-- ══ PLATFORM SUB-NAV ══════════════════════════════ -->
 <div class="sub-nav" id="subNav">
@@ -829,6 +927,5 @@ function switchCap(idx){
 }
 switchCap(0);
 </script>
-<script src="/nav-fix.js"></script>
 </body>
 </html>
