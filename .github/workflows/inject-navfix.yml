@@ -2,6 +2,8 @@ name: Inject nav-fix.js into all HTML pages
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -13,55 +15,32 @@ jobs:
   inject:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Inject nav-fix.js into root HTML files
+      - name: Inject nav-fix.js into all HTML files
         run: |
-          MARKER='nav-fix.js'
-          SCRIPT_ROOT='<script src="/nav-fix.js"></script>'
-          SCRIPT_SUB='<script src="../nav-fix.js"></script>'
-
-          for f in *.html; do
-            if [ -f "$f" ]; then
-              if grep -q "$MARKER" "$f"; then
-                echo "SKIP (already injected): $f"
-              else
-                sed -i "s|</body>|${SCRIPT_ROOT}\n</body>|I" "$f"
-                echo "INJECTED: $f"
-              fi
+          SCRIPT='<script src="/nav-fix.js"><\/script>'
+          COUNT=0
+          for f in $(find . -name '*.html' -not -path './.git/*'); do
+            if grep -q 'nav-fix.js' "$f"; then
+              echo "SKIP: $f"
+            else
+              sed -i "s|</body>|${SCRIPT}\n</body>|" "$f"
+              echo "INJECTED: $f"
+              COUNT=$((COUNT+1))
             fi
           done
+          echo "Total injected: $COUNT"
 
-          if [ -f "platform/index.html" ]; then
-            if grep -q "$MARKER" "platform/index.html"; then
-              echo "SKIP: platform/index.html"
-            else
-              sed -i "s|</body>|${SCRIPT_SUB}\n</body>|I" "platform/index.html"
-              echo "INJECTED: platform/index.html"
-            fi
-          fi
-
-          if [ -f "pricing/index.html" ]; then
-            if grep -q "$MARKER" "pricing/index.html"; then
-              echo "SKIP: pricing/index.html"
-            else
-              sed -i "s|</body>|${SCRIPT_SUB}\n</body>|I" "pricing/index.html"
-              echo "INJECTED: pricing/index.html"
-            fi
-          fi
-
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Fix: Inject nav-fix.js into all HTML pages sitewide"
-            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/avianshgujjeai/zuuzwebsite-v2.git HEAD:main
-          fi
+          git diff --staged --quiet || git commit -m "Fix: Inject nav-fix.js into all HTML pages sitewide"
+          git push
